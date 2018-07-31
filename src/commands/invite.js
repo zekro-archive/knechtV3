@@ -14,7 +14,8 @@ module.exports = function(msg, args, author, channel, guild) {
         var botID = args[0];
         var repo = args[1];
     
-        Main.botInvites[botID] = author;
+        var invite = { owner: author, id: Funcs.getRandomInt(1111, 9999) };
+        Main.botInvites[botID] = invite;
         
         Embeds.sendEmbed(author,
             'Because bot invites needs to be acceppted manually by a administrator, it can take up to 24 hours until your bot will be accepted.\n' +
@@ -25,7 +26,7 @@ module.exports = function(msg, args, author, channel, guild) {
         admins.forEach(admin => {
             Embeds.sendEmbed(admin, 
                 `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\nFrom: ${author}\nRepo: ${repo}`, 
-                'BOT INVITE')
+                'BOT INVITE | ID: ' + invite.id)
                 .then(m => {
                     m.react('❌');
                     var collector = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
@@ -33,7 +34,7 @@ module.exports = function(msg, args, author, channel, guild) {
                         delete Main.botInvites[botID];
                         Embeds.sendEmbedError(author, `Your bot invite got rejected by ${e.users.last()}.`);
                         collector.stop();
-                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite rejected by ${e.users.last()}.`));
+                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite (ID: \`${invite.id}\`) rejected by ${e.users.last()}.`));
                     });
                 });
         });
