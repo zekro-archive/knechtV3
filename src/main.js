@@ -28,16 +28,20 @@ cmd
     .register(require('./commands/dev'), 'dev', ['devroles', 'role', 'lang'], 'Add or remove dev roles', '`dev <role1> <role2>`')
     .register(require('./commands/invite'), 'invite', ['inv', 'botinv'], 'Invite your bot to this guild', `invite <BotID> <repository URL>`)
     .register(require('./commands/notify'), 'notify', ['noty'], 'Get or remove notify role', `notify`)
+    .register(require('./commands/prefix'), 'prefix', ['pre', 'präfix'], 'Set and list all bot prefixes', `prefix list\nprefix <botID> <prefix>`)
     .register(require('./commands/report'), 'report', ['rep'], 'Report someone', `report <user resolvable> <reason text>`, 'GUILDADMIN', 3)
+    .register(require('./commands/game'), 'game', null, 'Set game of the bot', `game reset\ngame <message>`)
     .register(require('./commands/test'), 'test', null, 'Only for testing purposes', null, 'DEBUG', 5)
     ;
 
 
-exports.client = client
-exports.cmd = cmd
-exports.config = config
-exports.mysql = mysql
-exports.botInvites = {}
+exports.client = client;
+exports.cmd = cmd;
+exports.config = config;
+exports.mysql = mysql;
+
+exports.botInvites = {};
+exports.changedGame = false;
 
 // REGISTERING EVENTS
 require('./events/membercount');

@@ -7,6 +7,8 @@ Main.client.on('guildMemberUpdate', updateMembCount);
 
 
 function updateMembCount(member) {
+    if (Main.changedGame)
+        return;
     if (!member)
         var guild = Main.client.guilds.first();
     else
@@ -17,3 +19,5 @@ function updateMembCount(member) {
         status: 'online'
     }});
 }
+
+exports.updateMembCount = updateMembCount;

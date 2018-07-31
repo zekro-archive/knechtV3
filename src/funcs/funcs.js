@@ -33,3 +33,7 @@ exports.getTime = (date) => {
 	    s = btf(date.getSeconds());
     return `${d}.${m}.${y} - ${h}:${min}:${s}`;
 }
+
+exports.getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

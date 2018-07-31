@@ -1,6 +1,6 @@
 var Main = require('../main');
 var Embeds = require('../funcs/embeds');
-
+var Funcs = require('../funcs/funcs');
 
 
 module.exports = function(msg, args, author, channel, guild) {
@@ -24,7 +24,7 @@ module.exports = function(msg, args, author, channel, guild) {
         var admins = guild.roles.find(r => r.id == Main.config.adminrole).members;
         admins.forEach(admin => {
             Embeds.sendEmbed(admin, 
-                `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\n[Repo](${repo})`, 
+                `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\nFrom: ${author}\nRepo: ${repo}`, 
                 'BOT INVITE')
                 .then(m => {
                     m.react('❌');
