@@ -41,9 +41,13 @@ module.exports = function(msg, args, author, channel, guild) {
                 author.removeRoles(remove, 'dev command');
             });
 
-            resolve(Embeds.sendEmbed(channel, 
-                `Added roles:\n${add.join(', ')}\n\nRemoved roles:\n${remove.join(', ')}`
-            ));
+            let outtext = '';
+            if (add.length > 0)
+                outtext += `Added roles:\n${add.join(', ')}\n\n`;
+            if (remove.length > 0)
+                outtext += `Removed roles:\n${remove.join(', ')}`;
+
+            resolve(Embeds.sendEmbed(channel, outtext));
         });
     });
 }

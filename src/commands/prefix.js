@@ -15,9 +15,9 @@ module.exports = function(msg, args, author, channel, guild) {
             Main.mysql.query('SELECT * FROM userbots', (err, res) => {
                 if (err)
                     return;
-                let botnames = '_\n';
-                let ownernames = '_\n';
-                let prefixes = '_\n';
+                let botnames = '';
+                let ownernames = '';
+                let prefixes = '';
                 res.forEach(r => {
                     let _bot = guild.members.get(r.botid);
                     let _owner = guild.members.get(r.ownerid);

@@ -33,6 +33,7 @@ cmd
     .register(require('./commands/bug'), 'bug', ['bugreport', 'suggest'], 'Send a bug report or suggestion', `bug <type> <message text>`)
     // STAFF COMMANDS
     .register(require('./commands/report'), 'report', ['rep', 'reports'], 'Report someone', `report <user resolvable> <reason text>\nreport list <user resolvable>`, 'GUILDADMIN', 4)
+    .register(require('./commands/link'), 'link', [], 'Link a bot together with its woner', `link <bot resolvable> <user resolvable>`, 'GUILDADMIN', 4)
     // ADMIN COMMANDS
     .register(require('./commands/restart'), 'restart', null, 'Restart the bot', `restart`, 'ADMIN', 5)
     .register(require('./commands/game'), 'game', null, 'Set game of the bot', `game reset\ngame <message>`, 'ADMIN', 5)
