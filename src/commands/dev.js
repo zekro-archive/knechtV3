@@ -24,7 +24,7 @@ module.exports = function(msg, args, author, channel, guild) {
             let add = [];
             let remove = [];
             args.forEach(a => {
-                a = a.replace(/(, )|,/gm, '').trim();
+                a = a.replace(/(, )|,/gm, '').trim().toLowerCase();
                 if (!devRoles.includes(a))
                     return;
                 let role = guild.roles.find(r => r.name.toLowerCase() == a)

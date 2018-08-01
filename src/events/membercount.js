@@ -13,7 +13,7 @@ function updateMembCount(member) {
         var guild = Main.client.guilds.first();
     else
         var guild = member.guild;
-    var members = guild.members.map(m => !m.bot).length;
+    var members = guild.memberCount;
     Main.client.user.setPresence({ game: {
         name: `${members} members`,
         status: 'online'

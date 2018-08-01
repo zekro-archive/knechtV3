@@ -6,7 +6,33 @@ var Funcs = require('../funcs/funcs');
 module.exports = function(msg, args, author, channel, guild) {
 
     if (args.length < 2) {
-        return Embeds.sendEmbedError(channel, 'Usage: `report <username/ID/mention> <reason text>`');
+        return Embeds.sendEmbedError(channel, 'Usage:\n`report <user resolvable> <reason text>`\n`report list <user resolvable>`');
+    }
+
+    if (args[0] == 'list') {
+        let victim = Funcs.fetchMember(guild, args[1], false);
+        let victimID = args[1];
+        return new Promise((resolve, reject) => {
+            Main.mysql.query('SELECT * FROM reports WHERE victim = ?', [victimID], (err, res) => {
+                if (err)
+                    return;
+                if (res.length == 0) {
+                    Embeds.sendEmbed(channel, 'This user has a white west!', `Reports for ${victim ? victim.user.tag : `QUITTED (${victimID})`}`);
+                    resolve();
+                    return;
+                }
+                let emb = Embeds.getEmbed('', `Reports for ${victim ? victim.user.tag : `QUITTED (${victimID})`}`);
+                res.forEach((r, i) => {
+                    let reporter = guild.members.get(r.reporter);
+                    emb.addField(`Report #${i}`, 
+                        `**Date:** \`${r.date}\`\n` +
+                        `**Reporter:** ${reporter ? reporter : r.reporter}\n` +
+                        '**Reason:**\n```' + r.reason + '```');
+                });
+                channel.send('', emb);
+                resolve();
+            });
+        });
     }
 
     var kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
