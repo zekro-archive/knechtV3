@@ -4,6 +4,7 @@ var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 var Consts = require('../consts');
 var Discord = require('discord.js');
+var Request = require('request');
 
 module.exports = function(msg, args, author, channel, guild) {
 

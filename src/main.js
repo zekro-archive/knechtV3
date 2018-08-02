@@ -75,6 +75,13 @@ cmd
         'Get information about a bot, list all bots or get users bots', 
         `bots list\nbot <user/bot resolvable>`
     )
+    .register(
+        require('./commands/organization'), 
+        'org', 
+        ['organization', 'orginvite', 'orga'], 
+        'You want to join the guilds GitHub [organziation](https://github.com/orgs/Dark-Devs)?', 
+        `org <github username / URL>`
+    )
     // STAFF COMMANDS
     .register(
         require('./commands/report'), 
@@ -117,7 +124,7 @@ cmd
         'eval', 
         [], 
         'Eval javascript code with the bot', 
-        `game reset\ngame <message>`, 
+        `eval\neval <javascript code>`, 
         'ADMIN', 
         5
     )

@@ -26,6 +26,7 @@
 - [dev](#dev)
 - [invite](#invite)
 - [notify](#notify)
+- [org](#org)
 - [prefix](#prefix)
 
 
@@ -48,8 +49,8 @@
 **Usage**
 
 ```php
-game reset
-game <message>
+eval
+eval <javascript code>
 ```
 
 
@@ -232,6 +233,23 @@ invite <BotID> <repository URL>
 
 ```php
 notify
+```
+
+
+### org
+
+> You want to join the guilds GitHub [organziation](https://github.com/orgs/Dark-Devs)?
+
+| | |
+| --------- | --------- |
+| Permission | 0 |
+| Group | MISC |
+| Aliases | organization, orginvite, orga |
+
+**Usage**
+
+```php
+org <github username / URL>
 ```
 
 

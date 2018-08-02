@@ -36,9 +36,9 @@ module.exports = function(msg, args, author, channel, guild) {
                     var collector = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
                     collector.on('collect', (e) => {
                         delete Main.botInvites[botID];
-                        Embeds.sendEmbedError(author, `Your bot invite got rejected by ${getUserString(e.users.last())}.`);
+                        Embeds.sendEmbedError(author, `Your bot invite got rejected by ${e.users.last()} (${e.users.last().tag}).`);
                         collector.stop();
-                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite (ID: \`${invite.id}\`) rejected by ${getUserString(e.users.last())}.`));
+                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite (ID: \`${invite.id}\`) rejected by ${e.users.last()} (${e.users.last().tag}).`));
                     });
                 });
         });
