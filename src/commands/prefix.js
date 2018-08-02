@@ -15,23 +15,17 @@ module.exports = function(msg, args, author, channel, guild) {
             Main.mysql.query('SELECT * FROM userbots', (err, res) => {
                 if (err)
                     return;
-                let botnames = '';
-                let ownernames = '';
-                let prefixes = '';
-                res.forEach(r => {
+                let table = [["BOT", "---"], ["OWNER", "-----"], ["PREFIX", "------"]];
+                res.forEach((r, l) => {
                     let _bot = guild.members.get(r.botid);
                     let _owner = guild.members.get(r.ownerid);
                     if (_bot && _owner) {
-                        botnames += _bot.toString() + "\n";
-                        ownernames += _owner.toString() + "\n";
-                        prefixes += r.prefix ? ('`' + r.prefix + '`\n') : '**UNSET**\n';
+                        table[0][l + 2] = _bot.user.tag;
+                        table[1][l + 2] = _owner.user.tag;
+                        table[2][l + 2] = r.prefix ? r.prefix : '[< UNSET >]';
                     }
                 });
-                channel.send('', 
-                    Embeds.getEmbed('', 'PREFIX LIST')
-                        .addField('BOT', botnames, true)
-                        .addField('OWNER', ownernames, true)
-                        .addField('PREFIX', prefixes, true));
+                channel.send('**BOT LIST**\n```' + Funcs.createTable(table, 4) + '```');
                 resolve();
             });
         });
@@ -62,7 +56,7 @@ module.exports = function(msg, args, author, channel, guild) {
                 }
                 Main.mysql.query('UPDATE userbots SET prefix = ? WHERE botid = ?', [prefix, botID], (err, res) => {
                     Embeds.sendEmbed(channel, `Changed prefix of bot <@${botID}> to \`${prefix}\`.`);
-                })
+                });
             });
         });
     });

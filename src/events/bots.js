@@ -39,9 +39,11 @@ function handleQuit(bot) {
             return;
         if (res.length > 0) {
             var owner = bot.guild.members.get(res[0].ownerid);
-            if (owner)
-                owner.removeRole(Main.config.botowners);
             Main.mysql.query('DELETE FROM userbots WHERE botid = ?', [bot.id]);
+            if (owner) {
+                if (res.filter(r => r.ownerid == owner.id).length == 1)
+                    owner.removeRole(Main.config.botowners);
+            }
         }
     });
 }

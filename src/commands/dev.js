@@ -37,15 +37,21 @@ module.exports = function(msg, args, author, channel, guild) {
             });
 
             
-            author.addRoles(add, 'dev command').then(() => {
-                author.removeRoles(remove, 'dev command');
-            });
+            // author.addRoles(add, 'dev command').then(() => {
+            //     author.removeRoles(remove, 'dev command');
+            //     console.log(add, remove);
+            // });
+
+            add.forEach(r => author.addRole(r, 'dev command'));
+            remove.forEach(r => author.removeRole(r, 'dev command'));
 
             let outtext = '';
             if (add.length > 0)
                 outtext += `Added roles:\n${add.join(', ')}\n\n`;
             if (remove.length > 0)
                 outtext += `Removed roles:\n${remove.join(', ')}`;
+            if (add.length == 0 && remove.length == 0)
+                outtext = 'No roles changed.';
 
             resolve(Embeds.sendEmbed(channel, outtext));
         });

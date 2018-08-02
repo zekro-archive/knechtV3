@@ -3,6 +3,10 @@ var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 
 
+function getUserString(member) {
+    return `${member} (${member.user.tag})`
+}
+
 module.exports = function(msg, args, author, channel, guild) {
     return new Promise((resolve, reject) => {
         if (args.length < 2) {
@@ -25,16 +29,16 @@ module.exports = function(msg, args, author, channel, guild) {
         var admins = guild.roles.find(r => r.id == Main.config.adminrole).members;
         admins.forEach(admin => {
             Embeds.sendEmbed(admin, 
-                `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\nFrom: ${author}\nRepo: ${repo}`, 
+                `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\nFrom: ${getUserString(author)}\nRepo: ${repo}`, 
                 'BOT INVITE | ID: ' + invite.id)
                 .then(m => {
                     m.react('❌');
                     var collector = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
                     collector.on('collect', (e) => {
                         delete Main.botInvites[botID];
-                        Embeds.sendEmbedError(author, `Your bot invite got rejected by ${e.users.last()}.`);
+                        Embeds.sendEmbedError(author, `Your bot invite got rejected by ${getUserString(e.users.last())}.`);
                         collector.stop();
-                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite (ID: \`${invite.id}\`) rejected by ${e.users.last()}.`));
+                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite (ID: \`${invite.id}\`) rejected by ${getUserString(e.users.last())}.`));
                     });
                 });
         });

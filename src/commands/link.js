@@ -30,15 +30,13 @@ module.exports = function(msg, args, author, channel, guild) {
     return new Promise((resolve, reject) => {
         Main.mysql.query('UPDATE userbots SET ownerid = ? WHERE botid = ?', [owner.id, bot.id], (err, res) => {
             if (err) {
-                console.log(err);
-                reject();
+                reject(err);
                 return;
             }
             if (res.affectedRows < 1) {
                 Main.mysql.query('INSERT INTO userbots (botid, ownerid) VALUES (?, ?)', [bot.id, owner.id], (err, res) => {
                     if (err) {
-                        console.log(err);
-                        reject();
+                        reject(err);
                         return;
                     }
                     Embeds.sendEmbed(channel, `Linked bot ${bot} with ${owner}.\nThis is a new entry for this bot, so please **set the prefix of the bot**!`);
