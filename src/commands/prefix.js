@@ -35,6 +35,15 @@ module.exports = function(msg, args, author, channel, guild) {
     var botID = args[0];
     var prefix = args[1];
 
+    var botacc = guild.members.get(botID);
+    if (!botacc) {
+        return Embeds.sendEmbedError(channel, 'This bot is not on this guild!');
+    }
+
+    if (prefix.length == 1 && !botacc.roles.find(r => Main.config.priobots.includes(r.id))) {
+        return Embeds.sendEmbedError(channel, 'Sorry, but all single character prefixes (like `!`, `%`, `$` ...) are reserved for staff and super bots!');
+    }
+
     return new Promise((resolve, reject) => {
         Main.mysql.query('SELECT * FROM userbots WHERE botid = ? AND ownerid = ?', [botID, author.id], (err, res) => {
             if (err)

@@ -53,6 +53,7 @@ module.exports = function(msg, args, author, channel, guild) {
             kerbholz.send('', emb);  
 
         victim.send('', emb);
+        Embeds.sendEmbed(channel, `Report of ${victim} was submitted by `${author}`.\nReason:\n${reason}`);
         Main.mysql.query('INsERT INTO reports VALUES (?, ?, ?, ?)', [victim.id, author.id, Funcs.getTime(), reason]);
         resolve();
     });
