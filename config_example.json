@@ -20,10 +20,10 @@
     "notifyrole": "473810643737247754",
 
     "mysql": {
-        "host": "localhost",
-        "user": ":^)",
-        "password": ":^)",
-        "database": ":^)"
+        "host": "127.0.0.1",
+        "user": "travis",
+        "password": "",
+        "database": "knecht"
     },
 
     "urls": {
