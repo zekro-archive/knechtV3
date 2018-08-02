@@ -8,7 +8,7 @@ env:
     - secure: "n/XzuLG0WxZmZTLryFRrJtw59/pWIbteewAHH1SJAzucC6+LL9rMVmhZu2zmueGCLTrkdiVXt8XVXewWVck0xozJtScniqx+fPygKxNDIr5gyMAJjVzk+Kj3Ybg0kRtCyoFZtb7pSPI+x7nYzIZtnyGMzg1TV7dtFjSylZVZHFspNNQgLkhT35ZEgvZcd0rpwFL+8j13u4ojA4CYC9sjs7VETTVet1FxCMmssdsq6Nr+yG7RdhgPLB4eA7DziQP8vfvzbbAgpJkUB81CNS0DvIgRdmbFcIGNuv4dbZHn2IKmnOlGe/18/qSFrWiyE2pySApHDZgESY3AQcBqWipWgGMm7GxqvCjKIf1mwc1HSfYo7b+ePFzfCiWbRH5FBP3wYU6c0LV1Jpy1iPcKGcYLBNC8Pd5MCQrdsnc54X94E0I0OVLDSEWitekeSfjZSKj+IufTIVLr0meTLPtBkj/O+bpUfEMrjXMRvkyumYwm/HDMX0FfWB+WpaG4XGexQp0j2svm/fo4CkV3j9wxYDMMbS2YpyMES/GWynGlbEvO6qCur6RtcfPcbkJeZf8nkSyEjwaufcV71X6x44PcRGauhWjPiJ/hKSvVkEwX1Xi7aLKBkHBvSh6r3CEMeWqaanNKsWNhqFxtQchALMUM+CegVussgR2Z7lopPmmzCzD+TWQ="
 
 script:
-  - npm test
+  - node src/main.js --debug $BOTTOKEN
 
 after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
