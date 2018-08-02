@@ -6,6 +6,12 @@ var Embeds = require('../funcs/embeds');
 Main.client.on('ready', () => {
     console.log('Ready')
 
+    if (Main.DEBUGMODE) {
+        console.log('Start completed. Shutting down...');
+        Main.client.destroy()
+            .then(() => process.exit(0));
+    }
+
     if (Fs.existsSync('./.restart')) {
         let content = Fs.readFileSync('./.restart', 'utf8').split(';');
         try {

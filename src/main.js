@@ -2,7 +2,12 @@ var discord = require('discord.js');
 var MySql = require('mysql');
 var { CmdParser } = require('discordjs-cmds');
 var Consts = require('./consts');
-var config = require('../config.json');
+
+
+exports.DEBUGMODE = process.argv.includes('--debug');
+
+var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
+
 
 var client = new discord.Client({
     fetchAllMembers: true
@@ -129,8 +134,7 @@ cmd
     ;
 
 
-cmd.createDocs('/var/www/html/files/knechtcmds.md', 'md')
-    .then(() => console.log('Created docs.'));
+cmd.createDocs('./cmdlist.md', 'md');
 
 exports.client = client;
 exports.cmd = cmd;
@@ -145,6 +149,4 @@ require('./events/membercount');
 require('./events/ready');
 require('./events/bots');
 
-client.login(config.token);
-
-
+client.login(exports.DEBUGMODE ? process.argv[3] : config.token);
