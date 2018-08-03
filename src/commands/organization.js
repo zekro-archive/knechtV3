@@ -10,8 +10,14 @@ function getUserString(member) {
 
 module.exports = function(msg, args, author, channel, guild) {
 
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
+    msg.delete();
+
     if (args.length < 1) {
-        return Embeds.sendEmbedError(channel, 'USAGE: `org <github username / url>`');
+        return Embeds.sendEmbedError(channel, 'USAGE: `org <github username / url>`')
+            .then(m => m.delete(5000));
     }
 
     return new Promise((resolve, reject) => {
@@ -34,9 +40,11 @@ module.exports = function(msg, args, author, channel, guild) {
         Request(options, (err, res) => {
             let body = JSON.parse(res.body);
             if (body.message == 'Not Found')
-                Embeds.sendEmbedError(channel, `There is no GitHub user with the username \`${username}\`.`);
+                Embeds.sendEmbedError(channel, `There is no GitHub user with the username \`${username}\`.`)
+                    .then(m => m.delete(3500));
             else
-                Embeds.sendEmbed(channel, 'Invite was send.\nPlease look into your emails or navigate to the [invite page](https://github.com/orgs/Dark-Devs/invitation) to accept the invite.');
+                Embeds.sendEmbed(channel, 'Invite was send.\nPlease look into your emails or navigate to the [invite page](https://github.com/orgs/Dark-Devs/invitation) to accept the invite.')
+                    .then(m => m.delete(3500));
             resolve();
         });
     });

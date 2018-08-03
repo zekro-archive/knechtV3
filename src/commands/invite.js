@@ -8,10 +8,17 @@ function getUserString(member) {
 }
 
 module.exports = function(msg, args, author, channel, guild) {
+
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
     return new Promise((resolve, reject) => {
         if (args.length < 2) {
-            resolve(Embeds.sendEmbedError(channel,
-                'Usage: ```\ninvite <BotID> <Code URL (GitHub, BitBucket...)>```'));
+            Embeds.sendEmbedError(channel,
+                'Usage: ```\ninvite <BotID> <Code URL (GitHub, BitBucket...)>```')
+                    .then(m => m.delete(5000));
+            msg.delete();
+            resolve();
             return;
         }
     
@@ -42,6 +49,7 @@ module.exports = function(msg, args, author, channel, guild) {
                     });
                 });
         });
+        msg.delete();
         resolve();
     });
 }

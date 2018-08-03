@@ -5,6 +5,11 @@ var Funcs = require('../funcs/funcs');
 
 module.exports = function(msg, args, author, channel, guild) {
 
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
+    msg.delete();
+
     if (args.length < 2) {
         return Embeds.sendEmbedError(channel, 'Usage:\n`report <user resolvable> <reason text>`\n`report list <user resolvable>`');
     }

@@ -14,19 +14,24 @@ module.exports = function(msg, args, author, channel, guild) {
     //         .then(() => console.log(m.user.tag));
     // });
 
-    var username = 'strukteon';
-
     var options = {
-        uri: `https://api.github.com/orgs/Dark-Devs/memberships/${username}`,
-        method: 'PUT',
+        uri: `https://api.github.com/repos/zekroTJA/knechtV3/issues`,
+        method: 'POST',
         headers: {
             'Authorization': `token ${Main.config.githubtoken}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.symmetra-preview+json',
             'User-Agent': 'zekroTJA'
-        }
+        },
+        body: JSON.stringify({
+            title: "Test issue",
+            body: "Test issue",
+            //labels: [ TYPES[type] ]
+        })
     };
 
-    Request(options, (err, res) => {
-        console.log(err, res.body);
+    Request(options, (err, res, body) => {
+        console.log(body);
     });
 
 }

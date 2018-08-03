@@ -1,3 +1,5 @@
+var Embeds = require('../funcs/embeds');
+
 exports.fetchMember = (guild, identifier, bots) => {
     identifier = identifier.toLowerCase();
 
@@ -71,4 +73,18 @@ exports.createTable = (tablearray, space) => {
     });
 
     return lines.join('\n');
+}
+
+
+exports.cmdDisallowed = (msg) => {
+    let channel = msg.channel;
+    let disallowed = false;
+    if (channel.topic)
+        disallowed = channel.topic.toLowerCase().includes("cmd-disallowed");
+    if (disallowed) {
+        Embeds.sendEmbedError(channel, 'Commands in this channel are not allowed!')
+            .then(m => m.delete(4000));
+        msg.delete();
+    }
+    return disallowed;
 }

@@ -8,6 +8,9 @@ var Request = require('request');
 
 module.exports = function(msg, args, author, channel, guild) {
 
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+        
     // JUST FOR DOUBLE CHECKING
     if (!author.roles.find(r => r.id == Main.config.adminrole)) {
         return Embeds.sendEmbedError(channel, 'PERMISSION DENIED');

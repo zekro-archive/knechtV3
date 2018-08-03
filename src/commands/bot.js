@@ -5,6 +5,9 @@ var Funcs = require('../funcs/funcs');
 
 module.exports = function(msg, args, author, channel, guild) {
 
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
     if (args.length < 1) {
         return Embeds.sendEmbedError(channel, 'USAGE:\n`bots list`\n`bot <user/bot resolvable>`');
     }
