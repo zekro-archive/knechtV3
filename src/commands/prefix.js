@@ -22,7 +22,7 @@ module.exports = function(msg, args, author, channel, guild) {
                     if (_bot && _owner) {
                         table[0][l + 2] = _bot.user.tag;
                         table[1][l + 2] = _owner.user.tag;
-                        table[2][l + 2] = r.prefix ? r.prefix : '[< UNSET >]';
+                        table[2][l + 2] = r.prefix ? r.prefix : '[<UNSET>]';
                     }
                 });
                 channel.send('**BOT LIST**\n```' + Funcs.createTable(table, 4) + '```');

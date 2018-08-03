@@ -37,12 +37,12 @@ module.exports = function(msg, args, author, channel, guild) {
             });
 
             
-            author.addRoles(add, 'dev command').then(() => {
-                author.removeRoles(remove, 'dev command');
-            });
+            // author.addRoles(add, 'dev command').then(() => {
+            //     author.removeRoles(remove, 'dev command');
+            // });
 
-            // add.forEach(r => author.addRole(r, 'dev command'));
-            // remove.forEach(r => author.removeRole(r, 'dev command'));
+            add.forEach(r => author.addRole(r, 'dev command'));
+            remove.forEach(r => author.removeRole(r, 'dev command'));
 
             let outtext = '';
             if (add.length > 0)
