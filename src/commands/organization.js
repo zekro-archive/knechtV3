@@ -36,7 +36,7 @@ module.exports = function(msg, args, author, channel, guild) {
             if (body.message == 'Not Found')
                 Embeds.sendEmbedError(channel, `There is no GitHub user with the username \`${username}\`.`);
             else
-                Embeds.sendEmbed(channel, 'Invite was send.\nPlease look into your emails or navigate to the [organizations page](https://github.com/Dark-Devs) to accept the invite.');
+                Embeds.sendEmbed(channel, 'Invite was send.\nPlease look into your emails or navigate to the [invite page](https://github.com/orgs/Dark-Devs/invitation) to accept the invite.');
             resolve();
         });
     });
