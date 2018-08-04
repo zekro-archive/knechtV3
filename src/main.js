@@ -82,6 +82,13 @@ cmd
         'You want to join the guilds GitHub [organziation](https://github.com/orgs/Dark-Devs)?', 
         `org <github username / URL>`
     )
+    .register(
+        require('./commands/exec'), 
+        'exec', 
+        ['exec', 'code'], 
+        'Exec some code', 
+        `exec -l <language> <code>`
+    )
     // STAFF COMMANDS
     .register(
         require('./commands/report'), 
