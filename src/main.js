@@ -17,7 +17,7 @@ var client = new discord.Client({
 var mysql = MySql.createConnection(config.mysql);
 mysql.connect();
 
-//var ws = WebSocket(Main);
+var ws = new WebSocket(config.webinterface.pw, 8778, client);
 
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)

@@ -4,7 +4,7 @@ var Embeds = require('../funcs/embeds');
 
 
 Main.client.on('ready', () => {
-    console.log('Ready')
+    console.log('Ready');
 
     if (Main.DEBUGMODE) {
         console.log('Start completed. Shutting down...');
