@@ -20,7 +20,7 @@
 
 # Database API
 
-[👉 **Database API Docs**](https://github.com/zekroTJA/zekroBot2/wiki/Database-API)
+[👉 **Database API Docs**](https://github.com/zekroTJA/knechtV3/wiki/Database-API)
 
 ---
 
