@@ -5,6 +5,10 @@
     "prefix": "!",
     "host": "221905671296253953",
 
+    "webinterface": {                                                                              
+        "pw": "thispasswordisverysafe"                                                   
+    },
+
     "jdoodle": {
         "client": ":^)",
         "token": ":^)"
