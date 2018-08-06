@@ -2,6 +2,7 @@ var discord = require('discord.js');
 var MySql = require('mysql');
 var { CmdParser } = require('discordjs-cmds');
 var Consts = require('./consts');
+var WebSocket = require('./ws/ws')
 
 
 exports.DEBUGMODE = process.argv.includes('--debug');
@@ -15,6 +16,8 @@ var client = new discord.Client({
 
 var mysql = MySql.createConnection(config.mysql);
 mysql.connect();
+
+//var ws = WebSocket(Main);
 
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
@@ -81,6 +84,13 @@ cmd
         ['organization', 'orginvite', 'orga'], 
         'You want to join the guilds GitHub [organziation](https://github.com/orgs/Dark-Devs)?', 
         `org <github username / URL>`
+    )
+    .register(
+        require('./commands/exec'), 
+        'exec', 
+        ['exec', 'code'], 
+        'Exec some code', 
+        `exec -l <language> <code>`
     )
     // STAFF COMMANDS
     .register(

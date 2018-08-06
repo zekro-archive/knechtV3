@@ -24,6 +24,7 @@
 - [bot](#bot)
 - [bug](#bug)
 - [dev](#dev)
+- [exec](#exec)
 - [invite](#invite)
 - [notify](#notify)
 - [org](#org)
@@ -199,6 +200,23 @@ bug <type> <message text>
 
 ```php
 dev <role1> <role2>
+```
+
+
+### exec
+
+> Exec some code
+
+| | |
+| --------- | --------- |
+| Permission | 0 |
+| Group | MISC |
+| Aliases | exec, code |
+
+**Usage**
+
+```php
+exec -l <language> <code>
 ```
 
 
