@@ -1,7 +1,7 @@
  <div align="center">
      <!-- <img src="http://zekro.de/zb2/src/logo_github.png" width="200"/> -->
      <h1>~ Knecht V3 ~</h1>
-     <strong>Management bot of [zekro's Dev Discord](http://discord.zekro.de)</strong><br><br>
+ <strong>Management bot of <a href="http://discord.zekro.de">zekro's Dev Discord</a></strong><br><br>
      <img src="https://forthebadge.com/images/badges/made-with-javascript.svg" height="30" />&nbsp;
      <img src="https://forthebadge.com/images/badges/built-with-love.svg" height="30" />&nbsp;
      <a href="https://zekro.de/discord"><img src="https://img.shields.io/discord/307084334198816769.svg?logo=discord&style=for-the-badge" height="30"></a>
