@@ -10,6 +10,10 @@
 - [game](#game)
 - [restart](#restart)
 
+### BOTOWNER
+
+- [apitoken](#apitoken)
+
 ### DEBUG
 
 - [test](#test)
@@ -87,6 +91,26 @@ game <message>
 
 ```php
 restart
+```
+
+
+
+## BOTOWNER
+
+### apitoken
+
+> Get API auth token fpr knechtV3 API
+
+| | |
+| --------- | --------- |
+| Permission | 1 |
+| Group | BOTOWNER |
+| Aliases |  |
+
+**Usage**
+
+```php
+apitoken <bot resolvable>
 ```
 
 

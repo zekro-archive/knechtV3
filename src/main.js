@@ -22,6 +22,7 @@ var ws = new WebSocket(config.webinterface.pw, 8778, client);
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
     .addType('DEBUG')
+    .addType('BOTOWNER')
     .setOptions({
         msgcolor: Consts.COLORS.MAIN,
         cmdlog: true,
@@ -91,6 +92,16 @@ cmd
         ['exec', 'code'], 
         'Exec some code', 
         `exec -l <language> <code>`
+    )
+    // BOT OWNER COMMANDS
+    .register(
+        require('./commands/apitoken'), 
+        'apitoken', 
+        [], 
+        'Get API auth token fpr knechtV3 API', 
+        `apitoken <bot resolvable>`,
+        'BOTOWNER',
+        1
     )
     // STAFF COMMANDS
     .register(
