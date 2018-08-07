@@ -21,8 +21,8 @@ var ws = new WebSocket(config.webinterface.pw, 8778, client);
 
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
-    .addType('DEBUG')
     .addType('BOTOWNER')
+    .addType('DEBUG')
     .setOptions({
         msgcolor: Consts.COLORS.MAIN,
         cmdlog: true,
@@ -119,6 +119,17 @@ cmd
         ['setbot', 'setowner', 'combine'], 
         'Link a bot together with its woner', 
         `link <bot resolvable> <user resolvable>`, 
+        'GUILDADMIN', 4
+    )
+    .register(
+        require('./commands/tags'), 
+        'tag', 
+        ['t', 'tags'], 
+        'Create tags with content which can be send to channels', 
+        `tags\n` +
+        `tag create <name> <content>\n` +
+        `tag remove <name> <content>\n` +
+        `t <name>`, 
         'GUILDADMIN', 4
     )
     // ADMIN COMMANDS

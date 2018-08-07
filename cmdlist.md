@@ -22,6 +22,7 @@
 
 - [link](#link)
 - [report](#report)
+- [tag](#tag)
 
 ### MISC
 
@@ -169,6 +170,26 @@ link <bot resolvable> <user resolvable>
 ```php
 report <user resolvable> <reason text>
 report list <user resolvable>
+```
+
+
+### tag
+
+> Create tags with content which can be send to channels
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | GUILDADMIN |
+| Aliases | t, tags |
+
+**Usage**
+
+```php
+tags
+tag create <name> <content>
+tag remove <name> <content>
+t <name>
 ```
 
 
