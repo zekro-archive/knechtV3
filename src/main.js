@@ -10,7 +10,7 @@ exports.DEBUGMODE = process.argv.includes('--debug');
 
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
 
-if (DEBUGMODE)
+if (exports.DEBUGMODE)
     Funcs.checkDevRolesRecources();
 
 var client = new discord.Client({
