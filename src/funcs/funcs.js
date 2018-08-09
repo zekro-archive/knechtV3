@@ -90,7 +90,7 @@ exports.cmdDisallowed = (msg) => {
 }
 
 
-exports.checkDevRolesRecources() = () => {
+exports.checkDevRolesRecources = () => {
     Request(Main.config.urls.devroles, (err, res, body) => {
         JSON.parse(body);
     })
