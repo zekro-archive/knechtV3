@@ -10,9 +10,6 @@ exports.DEBUGMODE = process.argv.includes('--debug');
 
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
 
-if (exports.DEBUGMODE)
-    Funcs.checkDevRolesRecources();
-
 var client = new discord.Client({
     fetchAllMembers: true
 });
@@ -215,6 +212,9 @@ exports.mysql = mysql;
 
 exports.botInvites = {};
 exports.changedGame = false;
+
+if (exports.DEBUGMODE)
+    Funcs.checkDevRolesRecources();
 
 // REGISTERING EVENTS
 require('./events/membercount');
