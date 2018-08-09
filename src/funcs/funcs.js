@@ -1,5 +1,6 @@
 var Embeds = require('../funcs/embeds');
 var Request = require('request');
+var Main = require('../main');
 
 exports.fetchMember = (guild, identifier, bots) => {
     identifier = identifier.toLowerCase();
