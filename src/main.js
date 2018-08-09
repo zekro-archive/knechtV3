@@ -2,13 +2,16 @@ var discord = require('discord.js');
 var MySql = require('mysql');
 var { CmdParser } = require('discordjs-cmds');
 var Consts = require('./consts');
-var WebSocket = require('./ws/ws')
+var WebSocket = require('./ws/ws');
+var Funcs = require('./funcs/funcs');
 
 
 exports.DEBUGMODE = process.argv.includes('--debug');
 
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
 
+if (DEBUGMODE)
+    Funcs.checkDevRolesRecources();
 
 var client = new discord.Client({
     fetchAllMembers: true
@@ -184,7 +187,7 @@ cmd
     .register(
         require('./commands/ban'), 
         'ban', 
-        ['bammember'], 
+        ['banmember'], 
         'ban someone from the guild with entry in DB + kerbholz channel', 
         `ban <member resolvable> <reason>`,
         'ADMIN',

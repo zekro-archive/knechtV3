@@ -88,3 +88,10 @@ exports.cmdDisallowed = (msg) => {
     }
     return disallowed;
 }
+
+
+exports.checkDevRolesRecources() = () => {
+    Request(Main.config.urls.devroles, (err, res, body) => {
+        JSON.parse(body);
+    })
+}
