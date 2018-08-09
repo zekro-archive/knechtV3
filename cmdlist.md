@@ -18,12 +18,6 @@
 
 - [test](#test)
 
-### GUILDADMIN
-
-- [link](#link)
-- [report](#report)
-- [tag](#tag)
-
 ### MISC
 
 - [bot](#bot)
@@ -34,6 +28,13 @@
 - [notify](#notify)
 - [org](#org)
 - [prefix](#prefix)
+
+### STAFF
+
+- [link](#link)
+- [reloaddev](#reloaddev)
+- [report](#report)
+- [tag](#tag)
 
 
 ---
@@ -132,64 +133,6 @@ apitoken <bot resolvable>
 
 ```php
 no help
-```
-
-
-
-## GUILDADMIN
-
-### link
-
-> Link a bot together with its woner
-
-| | |
-| --------- | --------- |
-| Permission | 4 |
-| Group | GUILDADMIN |
-| Aliases | setbot, setowner, combine |
-
-**Usage**
-
-```php
-link <bot resolvable> <user resolvable>
-```
-
-
-### report
-
-> Report someone
-
-| | |
-| --------- | --------- |
-| Permission | 4 |
-| Group | GUILDADMIN |
-| Aliases | rep, reports |
-
-**Usage**
-
-```php
-report <user resolvable> <reason text>
-report list <user resolvable>
-```
-
-
-### tag
-
-> Create tags with content which can be send to channels
-
-| | |
-| --------- | --------- |
-| Permission | 4 |
-| Group | GUILDADMIN |
-| Aliases | t, tags |
-
-**Usage**
-
-```php
-tags
-tag create <name> <content>
-tag remove <name> <content>
-t <name>
 ```
 
 
@@ -331,6 +274,81 @@ org <github username / URL>
 ```php
 prefix list
 prefix <botID> <prefix>
+```
+
+
+
+## STAFF
+
+### link
+
+> Link a bot together with its woner
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | setbot, setowner, combine |
+
+**Usage**
+
+```php
+link <bot resolvable> <user resolvable>
+```
+
+
+### reloaddev
+
+> Create role + channel for new dev role or delete if removed
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | reloaddevroles, refreshdev |
+
+**Usage**
+
+```php
+no help
+```
+
+
+### report
+
+> Report someone
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | rep, reports |
+
+**Usage**
+
+```php
+report <user resolvable> <reason text>
+report list <user resolvable>
+```
+
+
+### tag
+
+> Create tags with content which can be send to channels
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | t, tags |
+
+**Usage**
+
+```php
+tags
+tag create <name> <content>
+tag remove <name> <content>
+t <name>
 ```
 
 

@@ -21,6 +21,7 @@ var ws = new WebSocket(config.webinterface.pw, 8778, client);
 
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
+    .addType('STAFF')
     .addType('BOTOWNER')
     .addType('DEBUG')
     .setOptions({
@@ -110,7 +111,7 @@ cmd
         ['rep', 'reports'], 
         'Report someone', 
         `report <user resolvable> <reason text>\nreport list <user resolvable>`, 
-        'GUILDADMIN', 
+        'STAFF', 
         4
     )
     .register(
@@ -119,7 +120,8 @@ cmd
         ['setbot', 'setowner', 'combine'], 
         'Link a bot together with its woner', 
         `link <bot resolvable> <user resolvable>`, 
-        'GUILDADMIN', 4
+        'STAFF', 
+        4
     )
     .register(
         require('./commands/tags'), 
@@ -130,7 +132,17 @@ cmd
         `tag create <name> <content>\n` +
         `tag remove <name> <content>\n` +
         `t <name>`, 
-        'GUILDADMIN', 4
+        'STAFF', 
+        4
+    )
+    .register(
+        require('./commands/reloaddevroles'), 
+        'reloaddev', 
+        ['reloaddevroles', 'refreshdev'], 
+        'Create role + channel for new dev role or delete if removed', 
+        null, 
+        'STAFF', 
+        4
     )
     // ADMIN COMMANDS
     .register(

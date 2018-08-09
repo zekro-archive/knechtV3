@@ -1,4 +1,5 @@
 var Main = require('../main');
+var Embeds = require('../funcs/embeds');
 var express = require('express');
 var hbs = require('express-handlebars');
 var bodyParser = require('body-parser');

@@ -15,7 +15,7 @@ module.exports = function(msg, args, author, channel, guild) {
                 return;
             }
 
-            let devRoles = body.split(',').map(e => e.trim());
+            let devRoles = Object.keys(JSON.parse(body));
             
             if (args.length < 1) {
                 resolve(Embeds.sendEmbed(channel, 
