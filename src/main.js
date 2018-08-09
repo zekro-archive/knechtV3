@@ -144,6 +144,15 @@ cmd
         'STAFF', 
         4
     )
+    .register(
+        require('./commands/kick'), 
+        'kick', 
+        ['kickmember'], 
+        'Kick someone from the guild with entry in DB + kerbholz channel', 
+        `kick <member resolvable> <reason>`,
+        'STAFF',
+        4
+    )
     // ADMIN COMMANDS
     .register(
         require('./commands/restart'), 
@@ -170,6 +179,15 @@ cmd
         'Eval javascript code with the bot', 
         `eval\neval <javascript code>`, 
         'ADMIN', 
+        5
+    )
+    .register(
+        require('./commands/ban'), 
+        'ban', 
+        ['bammember'], 
+        'ban someone from the guild with entry in DB + kerbholz channel', 
+        `ban <member resolvable> <reason>`,
+        'ADMIN',
         5
     )
     // ZEKRO COMMANDS

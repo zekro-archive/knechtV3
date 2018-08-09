@@ -6,6 +6,7 @@
 
 ### ADMIN
 
+- [ban](#ban)
 - [eval](#eval)
 - [game](#game)
 - [restart](#restart)
@@ -31,6 +32,7 @@
 
 ### STAFF
 
+- [kick](#kick)
 - [link](#link)
 - [reloaddev](#reloaddev)
 - [report](#report)
@@ -42,6 +44,23 @@
 # Commands index
 
 ## ADMIN
+
+### ban
+
+> ban someone from the guild with entry in DB + kerbholz channel
+
+| | |
+| --------- | --------- |
+| Permission | 5 |
+| Group | ADMIN |
+| Aliases | bammember |
+
+**Usage**
+
+```php
+ban <member resolvable> <reason>
+```
+
 
 ### eval
 
@@ -279,6 +298,23 @@ prefix <botID> <prefix>
 
 
 ## STAFF
+
+### kick
+
+> Kick someone from the guild with entry in DB + kerbholz channel
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | kickmember |
+
+**Usage**
+
+```php
+kick <member resolvable> <reason>
+```
+
 
 ### link
 
