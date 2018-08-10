@@ -347,7 +347,7 @@ link <bot resolvable> <user resolvable>
 **Usage**
 
 ```php
-!mute <member resolvable> [<time 10m, 5h, 3d...>] <reason>
+!mute <member resolvable> [<time (\d{1,}[smhtw])>] <reason>
 !mute <member resolvable> - to unmute
 !mute list
 ```

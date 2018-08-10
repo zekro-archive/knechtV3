@@ -11,7 +11,7 @@ exports.mutedCashe = {};
 exports.exec = function(msg, args, author, channel, guild) {
 
     if (args.length < 1) {
-        return Embeds.sendEmbedError(channel, 'Usage: \n`!mute <member resolvable> [<time 10m, 5h, 3d...>] <reason>`\n`!mute <member resolvable>` - to unmute\n`!mute list`');
+        return Embeds.sendEmbedError(channel, 'Usage: \n`!mute <member resolvable> [<time (\\d{1,}[smhtw])>] <reason>`\n`!mute <member resolvable>` - to unmute\n`!mute list`');
     }
 
     if (args[0] == 'list' || args[0] == 'ls') {

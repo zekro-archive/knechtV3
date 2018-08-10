@@ -158,7 +158,7 @@ cmd
         'mute', 
         ['mutemember'], 
         'Mute someone with a reason optionally for a given time', 
-        `!mute <member resolvable> [<time 10m, 5h, 3d...>] <reason>\n!mute <member resolvable> - to unmute\n!mute list`,
+        `!mute <member resolvable> [<time (\\d{1,}[smhtw])>] <reason>\n!mute <member resolvable> - to unmute\n!mute list`,
         'STAFF',
         4
     )
@@ -229,6 +229,7 @@ if (exports.DEBUGMODE)
 require('./events/membercount');
 require('./events/ready');
 require('./events/bots');
-require('./events/newchannel')
+require('./events/newchannel');
+require('./events/chanselectcreator');
 
 client.login(exports.DEBUGMODE ? process.argv[3] : config.token);
