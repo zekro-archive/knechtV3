@@ -153,6 +153,15 @@ cmd
         'STAFF',
         4
     )
+    .register(
+        require('./commands/mute').exec, 
+        'mute', 
+        ['mutemember'], 
+        'Mute someone with a reason optionally for a given time', 
+        `!mute <member resolvable> [<time 10m, 5h, 3d...>] <reason>\n!mute <member resolvable> - to unmute\n!mute list`,
+        'STAFF',
+        4
+    )
     // ADMIN COMMANDS
     .register(
         require('./commands/restart'), 
@@ -220,5 +229,6 @@ if (exports.DEBUGMODE)
 require('./events/membercount');
 require('./events/ready');
 require('./events/bots');
+require('./events/newchannel')
 
 client.login(exports.DEBUGMODE ? process.argv[3] : config.token);
