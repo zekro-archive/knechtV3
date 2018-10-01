@@ -1,6 +1,6 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
 
 
 function getUserString(member) {
@@ -22,10 +22,10 @@ module.exports = function(msg, args, author, channel, guild) {
             return;
         }
     
-        var botID = args[0];
-        var repo = args[1];
+        let botID = args[0];
+        let repo = args[1];
     
-        var invite = { owner: author, id: Funcs.getRandomInt(1111, 9999) };
+        let invite = { owner: author, id: Funcs.getRandomInt(1111, 9999) };
         Main.botInvites[botID] = invite;
         
         Embeds.sendEmbed(author,
@@ -33,14 +33,14 @@ module.exports = function(msg, args, author, channel, guild) {
             'Please be patient and do not spam the invite!',
             'Invite Pending');
     
-        var admins = guild.roles.find(r => r.id == Main.config.adminrole).members;
+        let admins = guild.roles.find(r => r.id == Main.config.adminrole).members;
         admins.forEach(admin => {
             Embeds.sendEmbed(admin, 
                 `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\nFrom: ${getUserString(author)}\nRepo: ${repo}`, 
                 'BOT INVITE | ID: ' + invite.id)
                 .then(m => {
                     m.react('❌');
-                    var collector = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
+                    let collector = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
                     collector.on('collect', (e) => {
                         delete Main.botInvites[botID];
                         Embeds.sendEmbedError(author, `Your bot invite got rejected by ${e.users.last()} (${e.users.last().tag}).`);

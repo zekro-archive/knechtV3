@@ -1,7 +1,7 @@
-var Main = require('../main');
-var Request = require('request');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
+const Main = require('../main');
+const Request = require('request');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
 
 function replaceStuff(text) {
     return text
@@ -30,7 +30,7 @@ module.exports = function(msg, args, author, channel, guild) {
             Object.keys(devRoles).forEach(async function(role) {
 
                 if (!roles.find(r => r.name.toLowerCase() == role)) {
-                    var createdRole = await guild.createRole({
+                    let createdRole = await guild.createRole({
                         name: devRoles[role].displayname,
                         color: devRoles[role].color,
                         mentionable: true,
@@ -39,7 +39,7 @@ module.exports = function(msg, args, author, channel, guild) {
 
 
                 if (!chans.find(c => c.name == replaceStuff(role))) {
-                    var createdChan = guild.createChannel(
+                    let createdChan = guild.createChannel(
                         replaceStuff(role),
                         'text',
                         [

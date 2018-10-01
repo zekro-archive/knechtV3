@@ -1,4 +1,4 @@
-var Main = require('../main');
+const Main = require('../main');
 
 Main.client.on('ready', updateMembCount);
 Main.client.on('guildMemberAdd', updateMembCount);
@@ -10,10 +10,10 @@ function updateMembCount(member) {
     if (Main.changedGame)
         return;
     if (!member)
-        var guild = Main.client.guilds.first();
+        let guild = Main.client.guilds.first();
     else
-        var guild = member.guild;
-    var members = guild.memberCount;
+        let guild = member.guild;
+    let members = guild.memberCount;
     Main.client.user.setPresence({ game: {
         name: `${members} members`,
         status: 'online'

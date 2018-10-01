@@ -1,7 +1,7 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var Request = require('request');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const Request = require('request');
 
 // import Issue from 'github-api';
 
@@ -16,7 +16,7 @@ module.exports = function(msg, args, author, channel, guild) {
     //         .then(() => console.log(m.user.tag));
     // });
 
-    // var gh = new GitHub({
+    // let gh = new GitHub({
     //     token: Main.config.githubtoken
     // });
 

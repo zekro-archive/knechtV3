@@ -1,5 +1,5 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
 
 
 Main.client.on('guildMemberAdd', handleJoin);
@@ -15,7 +15,7 @@ function handleJoin(bot) {
 
     let invite = Main.botInvites[bot.id];
 
-    var admins = bot.guild.roles.find(r => r.id == Main.config.adminrole).members;
+    let admins = bot.guild.roles.find(r => r.id == Main.config.adminrole).members;
 
     Main.mysql.query('INSERT INTO userbots (botid, ownerid) VALUES (?, ?)', [bot.id, invite.owner.id], (err, res) => {
         delete Main.botInvites[bot.id];
@@ -38,7 +38,7 @@ function handleQuit(bot) {
         if (err)
             return;
         if (res.length > 0) {
-            var owner = bot.guild.members.get(res[0].ownerid);
+            let owner = bot.guild.members.get(res[0].ownerid);
             Main.mysql.query('DELETE FROM userbots WHERE botid = ?', [bot.id]);
             if (owner) {
                 if (res.filter(r => r.ownerid == owner.id).length == 1)

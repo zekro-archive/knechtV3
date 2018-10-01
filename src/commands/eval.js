@@ -1,10 +1,10 @@
-var Main = require('../main');
-var Util = require('util');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var Consts = require('../consts');
-var Discord = require('discord.js');
-var Request = require('request');
+const Main = require('../main');
+const Util = require('util');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const Consts = require('../consts');
+const Discord = require('discord.js');
+const Request = require('request');
 
 module.exports = function(msg, args, author, channel, guild) {
 
@@ -19,7 +19,7 @@ module.exports = function(msg, args, author, channel, guild) {
     if (args.length < 1) {
         return Embeds.sendEmbedError(channel, 
             'USAGE: `eval <js code>`\n\n' +
-            '**Available Objects and Variables:**\n\n' +
+            '**Available Objects and letiables:**\n\n' +
             '- [Main](https://github.com/zekroTJA/knechtV3/blob/master/src/main.js)\n' +
             '- [Consts](https://github.com/zekroTJA/knechtV3/blob/master/src/consts.js)\n' +
             '- [Embeds](https://github.com/zekroTJA/knechtV3/blob/master/src/funcs/embeds.js)\n' +

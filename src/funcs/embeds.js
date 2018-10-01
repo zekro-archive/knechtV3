@@ -1,5 +1,5 @@
-var { RichEmbed } = require('discord.js');
-var Consts = require('../consts')
+const { RichEmbed } = require('discord.js');
+const Consts = require('../consts')
 
 
 function sendEmbedError(chan, description, title) {

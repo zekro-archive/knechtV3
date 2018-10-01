@@ -1,6 +1,6 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
 
 
 module.exports = function(msg, args, author, channel, guild) {
@@ -47,14 +47,14 @@ module.exports = function(msg, args, author, channel, guild) {
             if (object.user.bot) {
                 let dbentry = res.find(r => r.botid == object.id);
                 let owner = guild.members.get(dbentry.ownerid);
-                var embed = Embeds.getEmbed('', 'BOT INFO')
+                let embed = Embeds.getEmbed('', 'BOT INFO')
                     .addField('OWNER', `${owner ? (`${owner} (${owner.user.tag} - ${owner.id})`) : `NOT ON GUILD`}`)
                     .addField('PREFIX', '```\n' + (dbentry.prefix ? dbentry.prefix : '[< UNREGISTERED >]') + '\n```')
                     .addField('BOTID', '```\n' + object.id + '\n```');
             }
             else {
                 let dbentries = res.filter(r => r.ownerid == object.id);
-                var embed = Embeds.getEmbed('', 'OWNER INFO');
+                let embed = Embeds.getEmbed('', 'OWNER INFO');
                 if (dbentries.length == 0) {
                     embed.setDescription('This user owns no user bots.');
                 }
