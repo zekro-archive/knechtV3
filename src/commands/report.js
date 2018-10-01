@@ -5,6 +5,11 @@ var Funcs = require('../funcs/funcs');
 
 module.exports = function(msg, args, author, channel, guild) {
 
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
+    msg.delete();
+
     if (args.length < 2) {
         return Embeds.sendEmbedError(channel, 'Usage:\n`report <user resolvable> <reason text>`\n`report list <user resolvable>`');
     }
@@ -13,7 +18,7 @@ module.exports = function(msg, args, author, channel, guild) {
         let victim = Funcs.fetchMember(guild, args[1], false);
         let victimID = args[1];
         return new Promise((resolve, reject) => {
-            Main.mysql.query('SELECT * FROM reports WHERE victim = ?', [victimID], (err, res) => {
+            Main.mysql.query('SELECT * FROM reports WHERE victim = ?', [victim ? victim.id : victimID], (err, res) => {
                 if (err)
                     return;
                 if (res.length == 0) {
@@ -24,7 +29,7 @@ module.exports = function(msg, args, author, channel, guild) {
                 let emb = Embeds.getEmbed('', `Reports for ${victim ? victim.user.tag : `QUITTED (${victimID})`}`);
                 res.forEach((r, i) => {
                     let reporter = guild.members.get(r.reporter);
-                    emb.addField(`Report #${i}`, 
+                    emb.addField(`Report #${i + 1}`, 
                         `**Date:** \`${r.date}\`\n` +
                         `**Reporter:** ${reporter ? reporter : r.reporter}\n` +
                         '**Reason:**\n```' + r.reason + '```');
@@ -45,8 +50,8 @@ module.exports = function(msg, args, author, channel, guild) {
 
     return new Promise((resolve, reject) => {
         let emb = Embeds.getEmbed('', 'REPORT')
-            .addField('EXECUTOR', author, true)
-            .addField('VICTIM', victim, true)
+            .addField('EXECUTOR', `${author} (${author.user.tag})`, true)
+            .addField('VICTIM', `${victim} (${victim.user.tag})`, true)
             .addField('REASON', reason, false);
             
         if (kerbholz)

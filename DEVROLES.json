@@ -1,0 +1,130 @@
+{
+  "java": {
+    "displayname": "Java",
+    "color": 11027200
+  },
+  "javascript": {
+    "displayname": "JavaScript",
+    "color": 15844367
+  },
+  "c#": {
+    "displayname": "C#",
+    "color": 1541632
+  },
+  "c++": {
+    "displayname": "C++",
+    "color": 6323595
+  },
+  "c": {
+    "displayname": "C",
+    "color": 5197647
+  },
+  "python": {
+    "displayname": "Python",
+    "color": 3447003
+  },
+  "lua": {
+    "displayname": "Lua",
+    "color": 128
+  },
+  "scala": {
+    "displayname": "Scala",
+    "color": 5428894
+  },
+  "html": {
+    "displayname": "Html",
+    "color": 1752220
+  },
+  "css": {
+    "displayname": "CSS",
+    "color": 7419530
+  },
+  ".net": {
+    "displayname": ".NET",
+    "color": 3066993
+  },
+  "ruby": {
+    "displayname": "Ruby",
+    "color": 6642833
+  },
+  "php": {
+    "displayname": "PHP",
+    "color": 5201301
+  },
+  "perl": {
+    "displayname": "Perl",
+    "color": 10675880
+  },
+  "go": {
+    "displayname": "Go",
+    "color": 9865810
+  },
+  "vb": {
+    "displayname": "VB",
+    "color": 2067276
+  },
+  "kotlin": {
+    "displayname": "Kotlin",
+    "color": 15830579
+  },
+  "swift": {
+    "displayname": "Swift",
+    "color": 11342935
+  },
+  "qml": {
+    "displayname": "QML",
+    "color": 5255270
+  },
+  "brainfuck": {
+    "displayname": "Brainfuck",
+    "color": 3089712
+  },
+  "groovy": {
+    "displayname": "Groovy",
+    "color": 9807270
+  },
+  "coffeescript": {
+    "displayname": "CoffeeScript",
+    "color": 3737146
+  },
+  "pascal": {
+    "displayname": "Pascal",
+    "color": 11587150
+  },
+  "mysql": {
+    "displayname": "MySql",
+    "color": 15105570
+  },
+  "rust": {
+    "displayname": "Rust",
+    "color": 10038562
+  },
+  "nodejs": {
+    "displayname": "NodeJs",
+    "color": 15660800
+  },
+  "bash": {
+    "displayname": "Bash",
+    "color": 10181046
+  },
+  "batch": {
+    "displayname": "Batch",
+    "color": 10618503
+  },
+  "qt": {
+    "displayname": "QT",
+    "color": 4312402
+  },
+  "sass": {
+    "displayname": "Sass",
+    "color": 3066993
+  },
+  "less": {
+    "displayname": "Less",
+    "color": 4675006
+  },
+  "stylus": {
+    "displayname": "Stylus",
+    "color": 15105570
+  }
+}

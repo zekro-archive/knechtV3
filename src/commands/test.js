@@ -3,6 +3,8 @@ var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 var Request = require('request');
 
+// import Issue from 'github-api';
+
 
 module.exports = function(msg, args, author, channel, guild) {
 
@@ -14,19 +16,8 @@ module.exports = function(msg, args, author, channel, guild) {
     //         .then(() => console.log(m.user.tag));
     // });
 
-    var username = 'strukteon';
-
-    var options = {
-        uri: `https://api.github.com/orgs/Dark-Devs/memberships/${username}`,
-        method: 'PUT',
-        headers: {
-            'Authorization': `token ${Main.config.githubtoken}`,
-            'User-Agent': 'zekroTJA'
-        }
-    };
-
-    Request(options, (err, res) => {
-        console.log(err, res.body);
-    });
+    // var gh = new GitHub({
+    //     token: Main.config.githubtoken
+    // });
 
 }

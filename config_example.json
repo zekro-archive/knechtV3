@@ -1,8 +1,18 @@
 {
     "token": ":^)",
     "githubtoken": ":^)",
+    "githubapptoken": ":^)",
     "prefix": "!",
     "host": "221905671296253953",
+
+    "webinterface": {                                                                              
+        "pw": "thispasswordisverysafe"                                                   
+    },
+
+    "jdoodle": {
+        "client": ":^)",
+        "token": ":^)"
+    },
 
     "permroles": [
         ["307084559303049216", 4],
@@ -11,12 +21,14 @@
     ],
     
     "adminrole": "307084714890625024",
+    "staffrole": "473519926649290757",
     "botowners": "473812137693675525",
     "userbots":  "473811699800080395",
     "priobots": ["353874594727198720", "307085325463715840"],
 
     "kerbholz": "342627519825969172",
     "bugtracker": "474103985972838400",
+    "chanselect": "477438690134720513",
 
     "notifyrole": "473810643737247754",
 
@@ -28,6 +40,6 @@
     },
 
     "urls": {
-        "devroles": "https://pastebin.com/raw/7UE5euBg"
+        "devroles": "https://raw.githubusercontent.com/Dark-Devs/knechtV3/master/DEVROLES.json"
     }
 }

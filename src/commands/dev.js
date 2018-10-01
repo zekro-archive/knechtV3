@@ -1,8 +1,13 @@
 var Main = require('../main');
 var Request = require('request');
 var Embeds = require('../funcs/embeds');
+var Funcs = require('../funcs/funcs');
 
 module.exports = function(msg, args, author, channel, guild) {
+
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
     return new Promise((resolve, reject) => {
         Request(Main.config.urls.devroles, (err, response, body) => {
             if (err) {
@@ -10,7 +15,7 @@ module.exports = function(msg, args, author, channel, guild) {
                 return;
             }
 
-            let devRoles = body.split(',').map(e => e.trim());
+            let devRoles = Object.keys(JSON.parse(body));
             
             if (args.length < 1) {
                 resolve(Embeds.sendEmbed(channel, 
@@ -52,7 +57,10 @@ module.exports = function(msg, args, author, channel, guild) {
             if (add.length == 0 && remove.length == 0)
                 outtext = 'No roles changed.';
 
-            resolve(Embeds.sendEmbed(channel, outtext));
+            msg.delete();
+            Embeds.sendEmbed(channel, outtext)
+                .then(m => m.delete(4000));
+            resolve();
         });
     });
 }

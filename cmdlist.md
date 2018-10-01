@@ -6,28 +6,38 @@
 
 ### ADMIN
 
+- [ban](#ban)
 - [eval](#eval)
 - [game](#game)
 - [restart](#restart)
 
+### BOTOWNER
+
+- [apitoken](#apitoken)
+
 ### DEBUG
 
 - [test](#test)
-
-### GUILDADMIN
-
-- [link](#link)
-- [report](#report)
 
 ### MISC
 
 - [bot](#bot)
 - [bug](#bug)
 - [dev](#dev)
+- [exec](#exec)
 - [invite](#invite)
 - [notify](#notify)
 - [org](#org)
 - [prefix](#prefix)
+
+### STAFF
+
+- [kick](#kick)
+- [link](#link)
+- [mute](#mute)
+- [reloaddev](#reloaddev)
+- [report](#report)
+- [tag](#tag)
 
 
 ---
@@ -35,6 +45,23 @@
 # Commands index
 
 ## ADMIN
+
+### ban
+
+> ban someone from the guild with entry in DB + kerbholz channel
+
+| | |
+| --------- | --------- |
+| Permission | 5 |
+| Group | ADMIN |
+| Aliases | banmember |
+
+**Usage**
+
+```php
+ban <member resolvable> <reason>
+```
+
 
 ### eval
 
@@ -90,6 +117,26 @@ restart
 
 
 
+## BOTOWNER
+
+### apitoken
+
+> Get API auth token fpr knechtV3 API
+
+| | |
+| --------- | --------- |
+| Permission | 1 |
+| Group | BOTOWNER |
+| Aliases |  |
+
+**Usage**
+
+```php
+apitoken <bot resolvable>
+```
+
+
+
 ## DEBUG
 
 ### test
@@ -106,44 +153,6 @@ restart
 
 ```php
 no help
-```
-
-
-
-## GUILDADMIN
-
-### link
-
-> Link a bot together with its woner
-
-| | |
-| --------- | --------- |
-| Permission | 4 |
-| Group | GUILDADMIN |
-| Aliases | setbot, setowner, combine |
-
-**Usage**
-
-```php
-link <bot resolvable> <user resolvable>
-```
-
-
-### report
-
-> Report someone
-
-| | |
-| --------- | --------- |
-| Permission | 4 |
-| Group | GUILDADMIN |
-| Aliases | rep, reports |
-
-**Usage**
-
-```php
-report <user resolvable> <reason text>
-report list <user resolvable>
 ```
 
 
@@ -199,6 +208,23 @@ bug <type> <message text>
 
 ```php
 dev <role1> <role2>
+```
+
+
+### exec
+
+> Exec some code
+
+| | |
+| --------- | --------- |
+| Permission | 0 |
+| Group | MISC |
+| Aliases | exec, code |
+
+**Usage**
+
+```php
+exec -l <language> <code>
 ```
 
 
@@ -268,6 +294,117 @@ org <github username / URL>
 ```php
 prefix list
 prefix <botID> <prefix>
+```
+
+
+
+## STAFF
+
+### kick
+
+> Kick someone from the guild with entry in DB + kerbholz channel
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | kickmember |
+
+**Usage**
+
+```php
+kick <member resolvable> <reason>
+```
+
+
+### link
+
+> Link a bot together with its woner
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | setbot, setowner, combine |
+
+**Usage**
+
+```php
+link <bot resolvable> <user resolvable>
+```
+
+
+### mute
+
+> Mute someone with a reason optionally for a given time
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | mutemember |
+
+**Usage**
+
+```php
+!mute <member resolvable> [<time (\d{1,}[smhtw])>] <reason>
+!mute <member resolvable> - to unmute
+!mute list
+```
+
+
+### reloaddev
+
+> Create role + channel for new dev role or delete if removed
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | reloaddevroles, refreshdev |
+
+**Usage**
+
+```php
+no help
+```
+
+
+### report
+
+> Report someone
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | rep, reports |
+
+**Usage**
+
+```php
+report <user resolvable> <reason text>
+report list <user resolvable>
+```
+
+
+### tag
+
+> Create tags with content which can be send to channels
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | t, tags |
+
+**Usage**
+
+```php
+tags
+tag create <name> <content>
+tag remove <name> <content>
+t <name>
 ```
 
 

@@ -2,12 +2,13 @@ var discord = require('discord.js');
 var MySql = require('mysql');
 var { CmdParser } = require('discordjs-cmds');
 var Consts = require('./consts');
+var WebSocket = require('./ws/ws');
+var Funcs = require('./funcs/funcs');
 
 
 exports.DEBUGMODE = process.argv.includes('--debug');
 
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
-
 
 var client = new discord.Client({
     fetchAllMembers: true
@@ -16,8 +17,12 @@ var client = new discord.Client({
 var mysql = MySql.createConnection(config.mysql);
 mysql.connect();
 
+var ws = new WebSocket(config.webinterface.pw, 8778, client);
+
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
+    .addType('STAFF')
+    .addType('BOTOWNER')
     .addType('DEBUG')
     .setOptions({
         msgcolor: Consts.COLORS.MAIN,
@@ -82,6 +87,23 @@ cmd
         'You want to join the guilds GitHub [organziation](https://github.com/orgs/Dark-Devs)?', 
         `org <github username / URL>`
     )
+    .register(
+        require('./commands/exec'), 
+        'exec', 
+        ['exec', 'code'], 
+        'Exec some code', 
+        `exec -l <language> <code>`
+    )
+    // BOT OWNER COMMANDS
+    .register(
+        require('./commands/apitoken'), 
+        'apitoken', 
+        [], 
+        'Get API auth token fpr knechtV3 API', 
+        `apitoken <bot resolvable>`,
+        'BOTOWNER',
+        1
+    )
     // STAFF COMMANDS
     .register(
         require('./commands/report'), 
@@ -89,7 +111,7 @@ cmd
         ['rep', 'reports'], 
         'Report someone', 
         `report <user resolvable> <reason text>\nreport list <user resolvable>`, 
-        'GUILDADMIN', 
+        'STAFF', 
         4
     )
     .register(
@@ -98,7 +120,47 @@ cmd
         ['setbot', 'setowner', 'combine'], 
         'Link a bot together with its woner', 
         `link <bot resolvable> <user resolvable>`, 
-        'GUILDADMIN', 4
+        'STAFF', 
+        4
+    )
+    .register(
+        require('./commands/tags'), 
+        'tag', 
+        ['t', 'tags'], 
+        'Create tags with content which can be send to channels', 
+        `tags\n` +
+        `tag create <name> <content>\n` +
+        `tag remove <name> <content>\n` +
+        `t <name>`, 
+        'STAFF', 
+        4
+    )
+    .register(
+        require('./commands/reloaddevroles'), 
+        'reloaddev', 
+        ['reloaddevroles', 'refreshdev'], 
+        'Create role + channel for new dev role or delete if removed', 
+        null, 
+        'STAFF', 
+        4
+    )
+    .register(
+        require('./commands/kick'), 
+        'kick', 
+        ['kickmember'], 
+        'Kick someone from the guild with entry in DB + kerbholz channel', 
+        `kick <member resolvable> <reason>`,
+        'STAFF',
+        4
+    )
+    .register(
+        require('./commands/mute').exec, 
+        'mute', 
+        ['mutemember'], 
+        'Mute someone with a reason optionally for a given time', 
+        `!mute <member resolvable> [<time (\\d{1,}[smhtw])>] <reason>\n!mute <member resolvable> - to unmute\n!mute list`,
+        'STAFF',
+        4
     )
     // ADMIN COMMANDS
     .register(
@@ -128,6 +190,15 @@ cmd
         'ADMIN', 
         5
     )
+    .register(
+        require('./commands/ban'), 
+        'ban', 
+        ['banmember'], 
+        'ban someone from the guild with entry in DB + kerbholz channel', 
+        `ban <member resolvable> <reason>`,
+        'ADMIN',
+        5
+    )
     // ZEKRO COMMANDS
     .register(
         require('./commands/test'), 
@@ -151,9 +222,14 @@ exports.mysql = mysql;
 exports.botInvites = {};
 exports.changedGame = false;
 
+if (exports.DEBUGMODE)
+    Funcs.checkDevRolesRecources();
+
 // REGISTERING EVENTS
 require('./events/membercount');
 require('./events/ready');
 require('./events/bots');
+require('./events/newchannel');
+require('./events/chanselectcreator');
 
 client.login(exports.DEBUGMODE ? process.argv[3] : config.token);

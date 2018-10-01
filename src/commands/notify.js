@@ -1,12 +1,18 @@
 var Main = require('../main');
 var Embeds = require('../funcs/embeds');
+var Funcs = require('../funcs/funcs');
 
 
 module.exports = function(msg, args, author, channel, guild) {
 
+    if (Funcs.cmdDisallowed(msg))
+        return new Promise(r => {r();});
+
     var role = guild.roles.find(r => r.id == Main.config.notifyrole);
 
     if (role) {
+
+        msg.delete();
 
         if (author.roles.find(r => r == role)) {
             author.removeRole(role, 'notify disabled');
