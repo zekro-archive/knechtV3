@@ -99,7 +99,7 @@ cmd
         require('./commands/apitoken'), 
         'apitoken', 
         [], 
-        'Get API auth token fpr knechtV3 API', 
+        'Get API auth token for knechtV3 API', 
         `apitoken <bot resolvable>`,
         'BOTOWNER',
         1
