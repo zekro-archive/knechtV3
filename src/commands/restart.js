@@ -1,7 +1,7 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var Fs = require('fs');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const Fs = require('fs');
 
 
 module.exports = function(msg, args, author, channel, guild) {

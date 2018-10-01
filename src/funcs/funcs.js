@@ -1,11 +1,11 @@
-var Embeds = require('../funcs/embeds');
-var Request = require('request');
-var Main = require('../main');
+let Embeds = require('../funcs/embeds');
+let Request = require('request');
+let Main = require('../main');
 
 exports.fetchMember = (guild, identifier, bots) => {
     identifier = identifier.toLowerCase();
 
-    var methods = [
+    let methods = [
         (m) => m.id == identifier || m.id == identifier.replace(/[<@!>]/gm, ""),
         (m) => m.user.username.toLowerCase() == identifier,
         (m) => m.user.username.toLowerCase().startsWith(identifier),
@@ -15,7 +15,7 @@ exports.fetchMember = (guild, identifier, bots) => {
         (m) => m.displayName.toLowerCase().includes(identifier)
     ];
 
-    for (var method of methods) {
+    for (let method of methods) {
         let out = guild.members.find(method);
         if (out && (!out.user.bot || bots))
             return out;
@@ -28,7 +28,7 @@ exports.getTime = (date) => {
 	        return "0" + inp;
     	return inp;
     }
-    var date = date ? date : (new Date()),
+    date = date ? date : (new Date()),
         y = date.getFullYear(),
         m = btf(date.getMonth() + 1),
 	    d = btf(date.getDate()),

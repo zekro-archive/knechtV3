@@ -1,12 +1,12 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var express = require('express');
-var hbs = require('express-handlebars');
-var bodyParser = require('body-parser');
-var path = require('path');
+let Main = require('../main');
+let Embeds = require('../funcs/embeds');
+let express = require('express');
+let hbs = require('express-handlebars');
+let bodyParser = require('body-parser');
+let path = require('path');
 
 
-var CODES = {
+let CODES = {
     OK: 0,
     ERR_AUTH: 1,
     ERR_DB: 2,

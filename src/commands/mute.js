@@ -1,8 +1,8 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var AcceptMessage = require('acceptmessage');
-var Consts = require('../consts');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const AcceptMessage = require('acceptmessage');
+const Consts = require('../consts');
 
 
 exports.mutedCashe = {};
@@ -35,7 +35,7 @@ exports.exec = function(msg, args, author, channel, guild) {
     }
 
     let victim = Funcs.fetchMember(guild, args[0], true);
-    var kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
+    let kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
     let muteRole = guild.roles.find(r => r.name == '[knecht muted]');
 
     if (!victim) {

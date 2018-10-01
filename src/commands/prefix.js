@@ -1,6 +1,6 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
 
 
 module.exports = function(msg, args, author, channel, guild) {
@@ -35,10 +35,10 @@ module.exports = function(msg, args, author, channel, guild) {
 
     }
 
-    var botID = args[0];
-    var prefix = args[1];
+    let botID = args[0];
+    let prefix = args[1];
 
-    var botacc = guild.members.get(botID);
+    let botacc = guild.members.get(botID);
     if (!botacc) {
         return Embeds.sendEmbedError(channel, 'This bot is not on this guild!');
     }
@@ -59,7 +59,7 @@ module.exports = function(msg, args, author, channel, guild) {
             Main.mysql.query('SELECT * FROM userbots', (err, res) => {
                 if (err)
                     return;
-                var used = [];
+                let used = [];
                 res.forEach(r => used.push(r.prefix));
                 if (used.includes(prefix)) {
                     Embeds.sendEmbedError(channel, 'The entered prefix is still used. Please chose an unused prefix!');

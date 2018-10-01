@@ -1,7 +1,7 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var Request = require('request');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const Request = require('request');
 
 
 function getUserString(member) {
@@ -22,13 +22,13 @@ module.exports = function(msg, args, author, channel, guild) {
 
     return new Promise((resolve, reject) => {
 
-        var username = args[0];
+        let username = args[0];
         if (username.startsWith('https://github.com/') || username.startsWith('www.github.com/') || username.startsWith('github.com/')) {
             let split = username.split('/');
             username = split[split.length - 1];
         }
         
-        var options = {
+        let options = {
             uri: `https://api.github.com/orgs/Dark-Devs/memberships/${username}`,
             method: 'PUT',
             headers: {

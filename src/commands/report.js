@@ -1,6 +1,6 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
 
 
 module.exports = function(msg, args, author, channel, guild) {
@@ -40,9 +40,9 @@ module.exports = function(msg, args, author, channel, guild) {
         });
     }
 
-    var kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
-    var victim = Funcs.fetchMember(guild, args[0], false);
-    var reason = args.slice(1).join(' ');
+    let kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
+    let victim = Funcs.fetchMember(guild, args[0], false);
+    let reason = args.slice(1).join(' ');
 
     if (!victim) {
         return Embeds.sendEmbedError(channel, 'Invalid victim. Can not be found on server.');

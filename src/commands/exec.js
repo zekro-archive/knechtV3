@@ -1,13 +1,13 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var Request = require('request');
-var Consts = require('../consts');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const Request = require('request');
+const Consts = require('../consts');
 
 
 module.exports = function(msg, args, author, channel, guild) {
 
-    var langs = 'java, c, c99, cpp, cpp14, php, perl, python2, python3, ruby, go, scala, bash, sql, pascal, csharp, vbn, haskell, objc, swift, groovy, fortran, brainfuck, lua, tcl, hack, rust, d, ada, r, freebasic, verilog, cobol, dart, yabasic, clojure, nodejs, scheme, forth, prolog, octave, coffeescript, icon, fsharp, nasm, gccasm, intercal, unlambda, picolisp, spidermonkey, rhino, bc, clisp, elixir, factor, falcon, fantom, pike, smalltalk, mozart, lolcode, racket, kotlin, whitespace'.split(', ');
+    let langs = 'java, c, c99, cpp, cpp14, php, perl, python2, python3, ruby, go, scala, bash, sql, pascal, csharp, vbn, haskell, objc, swift, groovy, fortran, brainfuck, lua, tcl, hack, rust, d, ada, r, freebasic, verilog, cobol, dart, yabasic, clojure, nodejs, scheme, forth, prolog, octave, coffeescript, icon, fsharp, nasm, gccasm, intercal, unlambda, picolisp, spidermonkey, rhino, bc, clisp, elixir, factor, falcon, fantom, pike, smalltalk, mozart, lolcode, racket, kotlin, whitespace'.split(', ');
 
     function sendHelp() {
         return Embeds.sendEmbedError(channel, 
@@ -22,7 +22,7 @@ module.exports = function(msg, args, author, channel, guild) {
     let argstr = args.join(' ').replace(/\n/gm, '[<LINEBRAKE>]');
     let split = argstr.match(/(?:[^\s"]+|"[^"]*")+/g).map(e => e.replace(/\[<LINEBRAKE>\]/gm, '\n'));
 
-    var language, stdin, script;
+    let language, stdin, script;
     
     let ilang = split.indexOf('-l');
     if (ilang < 0 || ilang == split.length - 1)
@@ -54,7 +54,7 @@ module.exports = function(msg, args, author, channel, guild) {
     msg.delete();
 
     return Embeds.sendEmbed(channel, 'Executing...').then(m => {
-        var options = {
+        let options = {
             uri: 'https://api.jdoodle.com/v1/execute',
             method: 'POST',
             headers: {
@@ -64,7 +64,7 @@ module.exports = function(msg, args, author, channel, guild) {
         };
     
         Request(options, (err, res, body) => {
-            var embed = Embeds.getEmbed('', 'Exec Result');
+            let embed = Embeds.getEmbed('', 'Exec Result');
             body = JSON.parse(body);
             if (body.error) {
                 embed

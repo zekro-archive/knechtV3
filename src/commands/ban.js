@@ -1,8 +1,8 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var AcceptMessage = require('acceptmessage');
-var Consts = require('../consts');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const AcceptMessage = require('acceptmessage');
+const Consts = require('../consts');
 
 
 module.exports = function(msg, args, author, channel, guild) {
@@ -16,16 +16,16 @@ module.exports = function(msg, args, author, channel, guild) {
         return Embeds.sendEmbedError(channel, 'Usage: `ban <user resolvable> <reason text>`');
     }
 
-    var kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
+    let kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
 
-    var victim = Funcs.fetchMember(guild, args[0]);
+    let victim = Funcs.fetchMember(guild, args[0]);
     if (!victim) {
         return Embeds.sendEmbedError(channel, 'Invalid victim.');
     }
 
-    var reason = '[BAN] ' + args.slice(1).join(' ');
+    let reason = '[BAN] ' + args.slice(1).join(' ');
 
-    var msg = new AcceptMessage(Main.client, {
+    let msg = new AcceptMessage(Main.client, {
         content: Embeds.getEmbed('', 'Please review your ban execute')
             .addField('Victim', `${victim} (${victim.user.tag})`)
             .addField('Reason', reason),

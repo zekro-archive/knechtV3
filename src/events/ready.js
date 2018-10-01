@@ -1,14 +1,14 @@
-var Main = require('../main');
-var Fs = require('fs');
-var Embeds = require('../funcs/embeds');
-var Mute = require('../commands/mute');
-var Funcs = require('../funcs/funcs');
+const Main = require('../main');
+const Fs = require('fs');
+const Embeds = require('../funcs/embeds');
+const Mute = require('../commands/mute');
+const Funcs = require('../funcs/funcs');
 
 
 Main.client.on('ready', () => {
     console.log('Ready');
 
-    var guild = Main.client.guilds.first();
+    let guild = Main.client.guilds.first();
 
     if (Main.DEBUGMODE) {
         console.log('Start completed. Shutting down...');
@@ -33,7 +33,7 @@ Main.client.on('ready', () => {
     }
 
     // SET ALL CHANNES MUTED ROLE AS PERMISSION
-    var muteRole = guild.roles.find(r => r.name == "[knecht muted]");
+    let muteRole = guild.roles.find(r => r.name == "[knecht muted]");
     guild.channels
         .filter(c => c.type == 'text')
         .forEach(c => c.overwritePermissions(muteRole, {

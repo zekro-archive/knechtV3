@@ -1,11 +1,11 @@
-var Main = require('../main');
-var Embeds = require('../funcs/embeds');
-var Funcs = require('../funcs/funcs');
-var AcceptMessage = require('acceptmessage');
-var Request = require('request');
+const Main = require('../main');
+const Embeds = require('../funcs/embeds');
+const Funcs = require('../funcs/funcs');
+const AcceptMessage = require('acceptmessage');
+const Request = require('request');
 
 
-var TYPES = [
+let TYPES = [
     'CRITICAL',
     'MAJOR',
     'MINOR',
@@ -47,7 +47,7 @@ module.exports = function(msg, args, author, channel, guild) {
         `## Description\n` +
         message;
 
-    var accmsg = new AcceptMessage(Main.client, {
+    let accmsg = new AcceptMessage(Main.client, {
         content: Embeds.getEmbed(
             'Your issue will look like following:\n___________________\n\n' +
             'Title: ```\n' + title + '\n```\n' + 
@@ -62,7 +62,7 @@ module.exports = function(msg, args, author, channel, guild) {
         },
         actions: {
             accept: () => {
-                var options = {
+                let options = {
                     uri: `https://api.github.com/repos/zekroTJA/knechtV3/issues`,
                     method: 'POST',
                     headers: {

@@ -1,9 +1,9 @@
-var Main = require('../main');
-var Fs = require('fs');
-var Embeds = require('../funcs/embeds');
-var Mute = require('../commands/mute');
-var Funcs = require('../funcs/funcs');
-var Request = require('request');
+const Main = require('../main');
+const Fs = require('fs');
+const Embeds = require('../funcs/embeds');
+const Mute = require('../commands/mute');
+const Funcs = require('../funcs/funcs');
+const Request = require('request');
 
 
 function replaceStuff(text) {
@@ -58,7 +58,7 @@ function createDevRolesMessage(guild, channel) {
     
             let filter = (reaction, user) => user.id != Main.client.user.id &&
                                              Object.keys(addedEmojis).includes(reaction.emoji.id); 
-            var collector = m.createReactionCollector(filter);
+            let collector = m.createReactionCollector(filter);
             collector.on('collect', m => {
                 let role = guild.roles.find(r => r.name.toLowerCase() == addedEmojis[m.emoji.id]);
                 let member = guild.members.get(m.users.last().id);
@@ -102,7 +102,7 @@ function createSystemRolesMessage(guild, channel) {
     
             let filter = (reaction, user) => user.id != Main.client.user.id &&
                                              Object.keys(addedEmojis).includes(reaction.emoji.id); 
-            var collector = m.createReactionCollector(filter);
+            let collector = m.createReactionCollector(filter);
             collector.on('collect', m => {
                 let role = guild.roles.find(r => r.name.toLowerCase() == addedEmojis[m.emoji.id]);
                 let member = guild.members.get(m.users.last().id);
@@ -152,7 +152,7 @@ function createEtcRolesMessage(guild, channel) {
     
             let filter = (reaction, user) => user.id != Main.client.user.id &&
                                              Object.keys(addedEmojis).includes(reaction.emoji.name); 
-            var collector = m.createReactionCollector(filter);
+            let collector = m.createReactionCollector(filter);
             collector.on('collect', m => {
                 let role = guild.roles.find(r => r.name.toLowerCase() == addedEmojis[m.emoji.name]);
                 let member = guild.members.get(m.users.last().id);

@@ -1,25 +1,25 @@
-var discord = require('discord.js');
-var MySql = require('mysql');
-var { CmdParser } = require('discordjs-cmds');
-var Consts = require('./consts');
-var WebSocket = require('./ws/ws');
-var Funcs = require('./funcs/funcs');
+const discord = require('discord.js');
+const MySql = require('mysql');
+const { CmdParser } = require('discordjs-cmds');
+const Consts = require('./consts');
+const WebSocket = require('./ws/ws');
+const Funcs = require('./funcs/funcs');
 
 
 exports.DEBUGMODE = process.argv.includes('--debug');
 
-var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
+let config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
 
-var client = new discord.Client({
+let client = new discord.Client({
     fetchAllMembers: true
 });
 
-var mysql = MySql.createConnection(config.mysql);
+let mysql = MySql.createConnection(config.mysql);
 mysql.connect();
 
-var ws = new WebSocket(config.webinterface.pw, 8778, client);
+let ws = new WebSocket(config.webinterface.pw, 8778, client);
 
-var cmd = new CmdParser(client, config.prefix)
+let cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
     .addType('STAFF')
     .addType('BOTOWNER')
