@@ -28,7 +28,7 @@ exports.getTime = (date) => {
 	        return "0" + inp;
     	return inp;
     }
-    let date = date ? date : (new Date()),
+    date = date ? date : (new Date()),
         y = date.getFullYear(),
         m = btf(date.getMonth() + 1),
 	    d = btf(date.getDate()),
