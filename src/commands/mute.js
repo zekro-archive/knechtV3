@@ -38,7 +38,7 @@ exports.exec = function(msg, args, author, channel, guild) {
     var kerbholz = guild.channels.find(c => c.id == Main.config.kerbholz);
     let muteRole = guild.roles.find(r => r.name == '[knecht muted]');
 
-    if (!victim) {
+    if (!victim || !victim.id) {
         return Embeds.sendEmbedError(channel, 'Invalid victim resolvable!');
     }
 

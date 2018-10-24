@@ -28,7 +28,7 @@ module.exports = function(msg, args, author, channel, guild) {
                         table[2][l + 2] = r.prefix ? r.prefix : '[<UNSET>]';
                     }
                 });
-                channel.send('**BOT LIST**\n```' + Funcs.createTable(table, 4) + '```');
+                channel.send('**BOT LIST**\n```' + Funcs.createTable(table, 4) + '```', { split: { prepend: '```', append: '```' } });
                 resolve();
             });
         });

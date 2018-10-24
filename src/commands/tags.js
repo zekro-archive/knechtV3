@@ -92,7 +92,7 @@ module.exports = function(msg, args, author, channel, guild) {
             table[1].push(creator ? creator.user.tag : r.creator);
             table[2].push(r.content.replace(/\n/gm, '\\n').substr(0, 100));
         });
-        channel.send('**TAGS LIST**\n\n```\n' + Funcs.createTable(table, 3) + '\n```');
+        channel.send('**TAGS LIST**\n\n```\n' + Funcs.createTable(table, 3) + '\n```', { split: { prepend: '```', append: '```' } });
     }
 
     return new Promise((resolve, reject) => {

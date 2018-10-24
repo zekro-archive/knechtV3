@@ -33,22 +33,45 @@ module.exports = function(msg, args, author, channel, guild) {
             'Please be patient and do not spam the invite!',
             'Invite Pending');
     
-        var admins = guild.roles.find(r => r.id == Main.config.adminrole).members;
-        admins.forEach(admin => {
-            Embeds.sendEmbed(admin, 
-                `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\nFrom: ${getUserString(author)}\nRepo: ${repo}`, 
-                'BOT INVITE | ID: ' + invite.id)
-                .then(m => {
-                    m.react('❌');
-                    var collector = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
-                    collector.on('collect', (e) => {
-                        delete Main.botInvites[botID];
-                        Embeds.sendEmbedError(author, `Your bot invite got rejected by ${e.users.last()} (${e.users.last().tag}).`);
-                        collector.stop();
-                        admins.forEach(a => Embeds.sendEmbedError(a, `Invite (ID: \`${invite.id}\`) rejected by ${e.users.last()} (${e.users.last().tag}).`));
+        var adminlog = guild.channels.get(Main.config.adminlog)
+        if (!adminlog)
+            return;
+
+        Embeds.sendEmbed(adminlog, 
+            `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\n` +
+            `From: ${getUserString(author)}\nRepo: ${repo}`, 
+            'BOT INVITE | ID: ' + invite.id)
+            .then(m => {
+                m.react('❌');
+                m.react('✅');
+                var collectorReject = m.createReactionCollector((reaction, user) => reaction.emoji.name == '❌' && user != Main.client.user);
+                var collectorAccept = m.createReactionCollector((reaction, user) => reaction.emoji.name == '✅' && user != Main.client.user);
+                collectorReject.on('collect', (e) => {
+                    delete Main.botInvites[botID];
+                    let reactor = e.users.last();
+                    Embeds.sendEmbed(adminlog, 'Enter a rejection reason:');
+                    m.clearReactions();
+                    collectorReject.stop();
+
+                    let reasonCollector = adminlog.createMessageCollector(
+                        (m) => m.author.id == reactor.id,
+                        { time: 2 * 60000, maxMatches: 1 }
+                    )
+                    let reason = '*no reason set*';
+                    reasonCollector.on('collect', (m) => {
+                        reason = m.content;
+                    })
+                    reasonCollector.on('end', () => {
+                        Embeds.sendEmbedError(author, `Your bot invite got rejected by ${reactor} (${reactor.tag}).\n\n**Reason:**\n${reason}`);
+                        Embeds.sendEmbedError(adminlog, `Invite (ID: \`${invite.id}\`) rejected by ${reactor} (${reactor.tag}).\n\n**Reason:**\n${reason}`);
                     });
                 });
-        });
+                collectorAccept.on('collect', (e) => {
+                    let reactor = e.users.last();
+                    Embeds.sendEmbed(adminlog, `Invite (ID: \`${invite.id}\`) accepted by ${reactor} (${reactor.tag}).`);
+                    m.clearReactions()
+                })
+            });
         msg.delete();
         resolve();
     });

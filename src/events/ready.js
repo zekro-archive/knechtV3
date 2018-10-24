@@ -6,7 +6,7 @@ var Funcs = require('../funcs/funcs');
 
 
 Main.client.on('ready', () => {
-    console.log('Ready');
+    console.log('Bot ready!');
 
     var guild = Main.client.guilds.first();
 
@@ -45,11 +45,14 @@ Main.client.on('ready', () => {
         if (err)
             return;
         res.forEach(r => {
-            Mute.mutedCashe[r.victim] = {
-                time: r.expires,
-                author: guild.members.get(r.reporter),
-                reason: r.reason
-            };
+            let author = guild.members.get(r.reporter);
+            if (author) {
+                Mute.mutedCashe[r.victim] = {
+                    time: r.expires,
+                    author: guild.members.get(r.reporter),
+                    reason: r.reason
+                };
+            }
         });
     });
 
@@ -58,8 +61,10 @@ Main.client.on('ready', () => {
         Object.keys(Mute.mutedCashe).forEach(victimid => {
             let mute = Mute.mutedCashe[victimid];
             let victim = guild.members.get(victimid);
-            if (mute.time != -1 && Date.now() > mute.time) {
-                Mute.autoUnmute(victim, mute, guild);
+            if (mute && victim) {
+                if (mute.time != -1 && Date.now() > mute.time) {
+                    Mute.autoUnmute(victim, mute, guild);
+                }
             }
         });
     }, 20000);
