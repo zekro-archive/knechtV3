@@ -94,6 +94,13 @@ cmd
         'Exec some code', 
         `exec -l <language> <code>`
     )
+    .register(
+        require('./commands/info'), 
+        'info', 
+        ['about', 'credits'], 
+        'Get information about Knecht V3', 
+        `info`
+    )
     // BOT OWNER COMMANDS
     .register(
         require('./commands/apitoken'), 

@@ -1,6 +1,7 @@
 var Main = require('../main');
 var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
+var Uptime = require('../funcs/uptimeCalculator');
 
 
 module.exports = function(msg, args, author, channel, guild) {
@@ -18,7 +19,7 @@ module.exports = function(msg, args, author, channel, guild) {
             Main.mysql.query('SELECT * FROM userbots', (err, res) => {
                 if (err)
                     return;
-                let table = [["BOT", "---"], ["OWNER", "-----"], ["PREFIX", "------"]];
+                    let table = [["BOT", "---"], ["OWNER", "-----"], ["PREFIX", "------"], ["UPTIME", "------"]];
                 res.forEach((r, l) => {
                     let _bot = guild.members.get(r.botid);
                     let _owner = guild.members.get(r.ownerid);
@@ -26,6 +27,7 @@ module.exports = function(msg, args, author, channel, guild) {
                         table[0][l + 2] = _bot.user.tag;
                         table[1][l + 2] = _owner.user.tag;
                         table[2][l + 2] = r.prefix ? r.prefix : '[<UNSET>]';
+                        table[3][l + 2] = Uptime.getUptimeFromRow(r) + ' %';
                     }
                 });
                 channel.send('**BOT LIST**\n```' + Funcs.createTable(table, 4) + '```', { split: { prepend: '```', append: '```' } });

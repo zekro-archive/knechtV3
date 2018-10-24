@@ -3,6 +3,7 @@ var Fs = require('fs');
 var Embeds = require('../funcs/embeds');
 var Mute = require('../commands/mute');
 var Funcs = require('../funcs/funcs');
+var Uptime = require('../funcs/uptimeCalculator');
 
 
 Main.client.on('ready', () => {
@@ -31,6 +32,8 @@ Main.client.on('ready', () => {
             console.log(e);
         }
     }
+
+    Uptime.startTimer();
 
     // SET ALL CHANNES MUTED ROLE AS PERMISSION
     var muteRole = guild.roles.find(r => r.name == "[knecht muted]");
