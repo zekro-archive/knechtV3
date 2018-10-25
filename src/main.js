@@ -238,5 +238,6 @@ require('./events/ready');
 require('./events/bots');
 require('./events/newchannel');
 require('./events/chanselectcreator');
+require('./events/dm');
 
 client.login(exports.DEBUGMODE ? process.argv[3] : config.token);

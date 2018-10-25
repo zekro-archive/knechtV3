@@ -77,7 +77,6 @@ exports.createTable = (tablearray, space) => {
     return lines.join('\n');
 }
 
-
 exports.cmdDisallowed = (msg) => {
     let channel = msg.channel;
     let disallowed = false;
@@ -91,9 +90,26 @@ exports.cmdDisallowed = (msg) => {
     return disallowed;
 }
 
-
 exports.checkDevRolesRecources = () => {
     Request(Main.config.urls.devroles, (err, res, body) => {
         JSON.parse(body);
     })
+}
+
+exports.padStart = (string, n, char) => {
+    if (!char) char = ' ';
+    if (!n) n = 1;
+    while (string.length < n) {
+        string = char + string;
+    }
+    return string;
+}
+
+exports.padEnd = (string, n, char) => {
+    if (!char) char = ' ';
+    if (!n) n = 1;
+    while (string.length < n) {
+        string += char;
+    }
+    return string;
 }

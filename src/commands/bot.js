@@ -22,12 +22,12 @@ module.exports = function(msg, args, author, channel, guild) {
             }
 
             if (args[0] == 'list' || args[0] == 'ls') {
-                let table = [["BOT", "---"], ["OWNER", "-----"], ["PREFIX", "------"], ["UPTIME", "------"]];
+                let table = [["     BOT", "-------------"], ["  OWNER", "---------"], ["  PREFIX", "----------"], ["  UPTIME", "----------"]];
                 res.forEach((r, l) => {
                     let _bot = guild.members.get(r.botid);
                     let _owner = guild.members.get(r.ownerid);
                     if (_bot && _owner) {
-                        table[0][l + 2] = _bot.user.tag;
+                        table[0][l + 2] = (Uptime.getStatus(_bot) ? '✅' : '❌') + '  ' + _bot.user.tag;
                         table[1][l + 2] = _owner.user.tag;
                         table[2][l + 2] = r.prefix ? r.prefix : '[<UNSET>]';
                         table[3][l + 2] = Uptime.getUptimeFromRow(r) + ' %';
@@ -52,7 +52,9 @@ module.exports = function(msg, args, author, channel, guild) {
                 var embed = Embeds.getEmbed('', 'BOT INFO')
                     .addField('OWNER', `${owner ? (`${owner} (${owner.user.tag} - ${owner.id})`) : `NOT ON GUILD`}`)
                     .addField('PREFIX', '```\n' + (dbentry.prefix ? dbentry.prefix : '[< UNREGISTERED >]') + '\n```')
-                    .addField('BOTID', '```\n' + object.id + '\n```');
+                    .addField('BOTID', '```\n' + object.id + '\n```')
+                    .addField('STATUS', (Uptime.getStatus(object) ? '✅' : '❌'), true)
+                    .addField('UPTIME', Uptime.getUptimeFromRow(dbentry) + ' %', true);
             }
             else {
                 let dbentries = res.filter(r => r.ownerid == object.id);
@@ -69,7 +71,9 @@ module.exports = function(msg, args, author, channel, guild) {
                             embed.addField(bot.user.tag, 
                                 `**Mention:** ${bot}\n` +
                                 `**ID:** \`${bot.id}\`\n` +
-                                `**PREFIX:** \`${e.prefix ? e.prefix : '[< UNREGISTERED >]'}\``);
+                                `**PREFIX:** \`${e.prefix ? e.prefix : '[< UNREGISTERED >]'}\`\n` +
+                                `**UPTIME:** ${Uptime.getUptimeFromRow(e)}\n` + 
+                                `**STATUS:** ${Uptime.getStatus(bot) ? '✅' : '❌'}`);
                     });
                 }
             }

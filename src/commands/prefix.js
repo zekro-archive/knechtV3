@@ -19,12 +19,12 @@ module.exports = function(msg, args, author, channel, guild) {
             Main.mysql.query('SELECT * FROM userbots', (err, res) => {
                 if (err)
                     return;
-                    let table = [["BOT", "---"], ["OWNER", "-----"], ["PREFIX", "------"], ["UPTIME", "------"]];
+                let table = [["     BOT", "-------------"], ["  OWNER", "---------"], ["  PREFIX", "----------"], ["  UPTIME", "----------"]];
                 res.forEach((r, l) => {
                     let _bot = guild.members.get(r.botid);
                     let _owner = guild.members.get(r.ownerid);
                     if (_bot && _owner) {
-                        table[0][l + 2] = _bot.user.tag;
+                        table[0][l + 2] = (Uptime.getStatus(_bot) ? '✅' : '❌') + '  ' + _bot.user.tag;
                         table[1][l + 2] = _owner.user.tag;
                         table[2][l + 2] = r.prefix ? r.prefix : '[<UNSET>]';
                         table[3][l + 2] = Uptime.getUptimeFromRow(r) + ' %';

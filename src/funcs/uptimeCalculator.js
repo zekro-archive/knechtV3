@@ -1,5 +1,6 @@
 var Embeds = require('../funcs/embeds');
 var Main = require('../main');
+var Funcs = require('../funcs/funcs');
 
 
 const UPTIME_INTERVAL =           3600 * 1000;
@@ -16,6 +17,12 @@ function calculateUptimePerc(set) {
 }
 
 module.exports = {
+
+    getStatus: (bot) => {
+        if (!bot)
+            return 0;
+        return (bot.presence.status == 'offline' ? 0 : 1);
+    },
 
     timerHandler: () => {
         var guild = Main.client.guilds.first();
@@ -35,7 +42,7 @@ module.exports = {
                         if (stats.length >= setRange) {
                             stats.splice(0, 1);
                         }
-                        stats.push(bot.presence.status == 'offline' ? 0 : 1);
+                        stats.push(module.exports.getStatus(bot));
                         Main.mysql.query('UPDATE userbots SET uptime = ? WHERE botid = ?', [JSON.stringify(stats), bot.id]);
                     } catch(e) {
                         console.log('ERROR: ', e)
@@ -67,7 +74,7 @@ module.exports = {
     getUptimeFromRow(r) {
         try {
             let uptime = JSON.parse(r.uptime);
-            return calculateUptimePerc(uptime);
+            return Funcs.padStart((calculateUptimePerc(uptime)).toFixed(2), 6);
         } catch (e) {
             console.log('ERROR: ', e)
             return 'err';
