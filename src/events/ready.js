@@ -26,6 +26,9 @@ Main.client.on('ready', () => {
                 .then(m => {
                     m.edit('', Embeds.getEmbed('Restarted. :ok_hand:'));
                     Fs.unlink('./.restart');
+                })
+                .catch((e) => {
+                    console.log('ERROR: ' + e)
                 });
         }
         catch (e) {

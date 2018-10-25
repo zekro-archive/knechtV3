@@ -9,6 +9,7 @@ var Funcs = require('./funcs/funcs');
 exports.DEBUGMODE = process.argv.includes('--debug');
 
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
+exports.config = config;
 
 var client = new discord.Client({
     fetchAllMembers: true
@@ -223,7 +224,6 @@ cmd.createDocs('./cmdlist.md', 'md');
 
 exports.client = client;
 exports.cmd = cmd;
-exports.config = config;
 exports.mysql = mysql;
 
 exports.botInvites = {};

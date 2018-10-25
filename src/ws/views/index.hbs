@@ -1,6 +1,7 @@
 <div>
-    <form action="wilogin" method="post" style="margin-bottom: 20px">
-        <input type="hidden" name="token" value="{{token}}">
+    <form action="wi" method="get" style="margin-bottom: 20px">
+        <input type="hidden" name="code" value="{{code}}">
+        <input type="hidden" name="userid" value="{{userID}}">
         <input type="text" class="textbox_noscale" name="query" placeholder="search query">
         <input type="submit" value="SEARCH" class="button" style="">
     </form>
