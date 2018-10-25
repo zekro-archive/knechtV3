@@ -22,13 +22,15 @@ Simply by a command, users can invite their own bots to the server by passing th
 Also, every bot needs to have a specific, unique prefix, which needs to be set by the `prefix` command. With the `prefix` or `bot` command, every user can list all user bots on the guild with their owners and prefixes, they should react to. Also, the bot checks and displays the uptime of the bots.  
 As well, Knecht handles if the bot leaves the discord to remove the owners `Bot Owner` role. Vice versa Knehct will kick all user bots of an onwer, if they left the Discord.
 
-# User Moderation and Logging
+### User Moderation and Logging
 
 Of course, Knecht also has functions to report, mute *(in text channels)*, kick and ban members. The victims will be notified over DM, all actions will be logged in a defined log text cnannel and registered in the internal database. Also, all logs can be accessed over a web interface. 
 
-# Dev Roles
+### Dev Roles
 
 Using the `dev` command or the reactions in the `#channelselect` channel, users can add and remove specific theme roles like dev languages or technique roles, which will automatically give access to corresponding text channels.
+
+
 
 ---
 
