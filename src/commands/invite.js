@@ -37,6 +37,8 @@ module.exports = function(msg, args, author, channel, guild) {
         if (!adminlog)
             return;
 
+        adminlog.send('@here').then((m) => m.delete(10));
+        
         Embeds.sendEmbed(adminlog, 
             `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${botID}&scope=bot)\n` +
             `From: ${getUserString(author)}\nRepo: ${repo}`, 

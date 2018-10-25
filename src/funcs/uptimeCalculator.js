@@ -56,11 +56,11 @@ module.exports = {
                 cb(null, err);
                 return;
             }
-            var res = {};
+            var result = {};
             res.forEach((r) => {
-                res[r.botid] = module.exports.getUptimeFromRow(r)
+                result[r.botid] = module.exports.getUptimeFromRow(r)
             });
-            cb(res);
+            cb(result);
         });
     },
 
