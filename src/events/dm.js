@@ -30,11 +30,11 @@ Main.client.on('message', (msg) => {
         actions: {
             accept: () => {
                 sendMessage(content);
-                Embeds.sendEmbed(channel, 'Your message was send anonymously. Thank you for your submission!');
+                Embeds.sendEmbed(channel, 'Your message was sent anonymously. Thank you for your submission!');
             },
             deny: () => {
                 sendMessage(content, author);
-                Embeds.sendEmbed(channel, 'Your message was send. Thank you for your submission!');
+                Embeds.sendEmbed(channel, 'Your message was sent. Thank you for your submission!');
             }
         }
     }).send(channel);
