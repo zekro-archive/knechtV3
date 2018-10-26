@@ -3,6 +3,7 @@ var Embeds = require('../funcs/embeds');
 
 
 Main.client.on('channelCreate', handleChannelCreate);
+Main.client.on('channelDelete', handleChannelDelete);
 
 function handleChannelCreate(chan) {
     if (chan.type == 'text') {
@@ -11,4 +12,9 @@ function handleChannelCreate(chan) {
             SEND_MESSAGES: false
         })
     }
+}
+
+
+function handleChannelDelete(chan) {
+    Main.mysql.query('DELETE FROM topics WHERE channel = ?', [chan.id])
 }

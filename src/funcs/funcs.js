@@ -22,6 +22,24 @@ exports.fetchMember = (guild, identifier, bots) => {
     }
 }
 
+exports.fetchChannel = (guild, identifier) => {
+    identifier = identifier.toLowerCase();
+
+    var methods = [
+        (m) => m.id == identifier || m.id == identifier.replace(/[<#>]/gm, ""),
+        (m) => m.name.toLowerCase() == identifier,
+        (m) => m.name.toLowerCase().startsWith(identifier),
+        (m) => m.name.toLowerCase().includes(identifier)
+    ];
+
+    for (var method of methods) {
+        let out = guild.members.find(method);
+        if (out && (!out.user.bot || bots))
+            return out;
+    }
+}
+
+
 exports.getTime = (date) => {
     function btf(inp) {
     	if (inp < 10)
