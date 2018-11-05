@@ -9,84 +9,138 @@ var TYPES = [
     'CRITICAL',
     'MAJOR',
     'MINOR',
-    'SUGGESTION' 
+    'SUGGESTION',
+    'BUG'
 ];
 
 
 module.exports = function(msg, args, author, channel, guild) {
 
-    if (Funcs.cmdDisallowed(msg))
-        return new Promise(r => {r();});
-
-    let sendHelp = () => {
+    if (!Main.config.githubtoken) {
         return Embeds.sendEmbedError(channel, 
-            'USAGE: ```\n!bug \n[TITLE IN THIS LINE]\n[TYPE (SEE BELOW) IN THIS LINE]\n[DESCRIPTION IN NEXT LINES]\n```\n\n' +
-            '**ATTENTION:** After `!bug` needs to be a [SPACE] before next line!\n\n' +
-            'Types:\n0 - CRITICAL\n1 - MAJOR\n2 - MINOR\n3 - SUGGESTION');
+            'The owner of this bot has not specified a GitHub access token to submit issues with.\n\n' +
+            'Surely, you can visit [**knechts\'s Issue Page**](https://github.com/zekroTJA/knechtV3/issues) and submit manually.');
     }
 
-    if (args.length < 2)
-        return sendHelp();
+    var createMessageColelctor = () => {
+        return channel.createMessageCollector(
+            (m) => m.author.id == author.id && m.content.trim().length > 0, 
+            { /*maxMatches: 1,*/ time: 15 * 60000 }
+        );
+    };
 
-    let lines = args.join(' ').split('\n').slice(1).map(l => l.trim());
+    Embeds.sendEmbed(channel, 'Please enter the **title** of the issue:\n*Enter `exit` or `cancel` to cancel.*');
 
-    if (lines.length < 3)
-        return sendHelp();
+    var statusCounter = 0;
+    var issueBuild = {};
 
-    let title = lines[0];
-    let type = parseInt(lines[1]);
-    if (isNaN(type) || type > 3 || type < 0)
-        return sendHelp();
-    let message = lines.slice(2).join('\n');
+    var messageCollector = createMessageColelctor();
 
-    let finalMsg = 
-        `## Submitted by\n` + 
-        `> ${author.user.tag}\n\n` +
-        `## Type\n` +
-        `> ${TYPES[type]}\n\n` +
-        `## Description\n` +
-        message;
+    messageCollector.on('collect', (m) => {
+        let cont = m.content;
 
-    var accmsg = new AcceptMessage(Main.client, {
-        content: Embeds.getEmbed(
-            'Your issue will look like following:\n___________________\n\n' +
-            'Title: ```\n' + title + '\n```\n' + 
-            'Type: ```\n' + TYPES[type] + '\n```\n' +
-            'Message: ```\n' + message + '\n```\n' + 
-            'Press ✅ to send the report or press ❌ to cancel.'),
-        channel: channel,
-        checkUser: author,
-        emotes: {
-            accept: '✅',
-            deny:   '❌'
-        },
-        actions: {
-            accept: () => {
-                var options = {
-                    uri: `https://api.github.com/repos/zekroTJA/knechtV3/issues`,
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `token ${Main.config.githubtoken}`,
-                        'Content-Type': 'application/json',
-                        'User-Agent': 'zekroTJA'
-                    },
-                    body: JSON.stringify({
-                        title,
-                        body: finalMsg,
-                        labels: [ TYPES[type] ]
-                    })
-                };
-                Request(options, (err, res) => {
-                    let resdata = JSON.parse(res);
-                    Embeds.sendEmbed(channel, `Send. [**Here**](${resdata ? resdata.url : ''}) you can see your issue on GitHub.`);
+        if (cont.toLowerCase() == 'close' || cont.toLowerCase() == 'exit') {
+            Embeds.error(channel, 'Canceled.');
+            messageCollector.stop('canceled');
+            return;
+        }
+
+        switch (statusCounter) {
+            case 0:
+                issueBuild.title = cont;
+                statusCounter++;
+                Embeds.sendEmbed(channel, 
+                    'Please enter now the **labes** of the issue by follwing numbers (multiple lables possible):\n\n' +
+                    TYPES.map((t, n) => `\`${n}\` - \`${t}\``).join('\n') +
+                    '\n*Enter `exit` or `cancel` to cancel.*');
+                break;
+
+            case 1:
+                let assignedTypes = [];
+                cont.split(/\s|\s*,\s*/gm).forEach((n) => {
+                    n = parseInt(n);
+                    if (!isNaN(n) && n >= 0 && n < TYPES.length) {
+                        assignedTypes.push(TYPES[n]);
+                    }
                 });
-            },
-            deny: () => {
-                Embeds.sendEmbedError(channel, 'Canceled.');
-            }
+                issueBuild.types = assignedTypes;
+                statusCounter++;
+                Embeds.sendEmbed(channel, 
+                    'Please enter now a short description to your issue (format in Markdown, in best case with screen shots, error stacks and/or a how-to-repoduce section):\n' +
+                    '\n*Enter `exit` or `cancel` to cancel.*');
+                break;
+            case 2:
+                issueBuild.body = cont;
+                messageCollector.stop('finished');
+                break;
         }
     });
 
-    accmsg.send();
+    messageCollector.on('end', (_, reason) => {
+        switch (reason) {
+            case 'time':
+                Embeds.sendEmbedError(channel, 'Issue creation timed out.');
+                break;
+            case 'finished':
+                finalize();
+                break;
+        }
+    });
+
+    function finalize() {
+
+        issueBuild.assembledBody = 
+            `## Submitted by\n` +
+            `> ${author.user.tag}\n\n` + 
+            `## Type(s)\n` +
+            `> ${issueBuild.types.length > 0 ? issueBuild.types.join(', ') : 'No tags attached'}\n\n` +
+            `## Description:\n` +
+            issueBuild.body;
+
+        var accmsg = new AcceptMessage(Main.client, {
+            content: Embeds.getEmbed(
+                'Your issue will look like following:\n___________________\n\n' +
+                'Title: ```\n' + issueBuild.title + '\n```\n' + 
+                'Type: ```\n' + issueBuild.types.join(', ') + '\n```\n' +
+                'Message: ```\n' + issueBuild.body + '\n```\n' + 
+                'Press âœ… to send the report or press âŒ to cancel.'),
+            channel: channel,
+            checkUser: author,
+            emotes: {
+                accept: 'âœ…',
+                deny:   'âŒ'
+            },
+            actions: {
+                accept: () => {
+                    var options = {
+                        uri: `https://api.github.com/repos/zekroTJA/knechtV3/issues`,
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `token ${Main.config.githubtoken}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'knechtV3-BugTracker'
+                        },
+                        body: JSON.stringify({
+                            title:  issueBuild.title,
+                            body:   issueBuild.assembledBody,
+                            labels: issueBuild.types
+                        })
+                    };
+                    Request(options, (err, res) => {
+                        let resdata = JSON.parse(res.body);
+                        console.log(resdata);
+                        Embeds.sendEmbed(channel, `Send. [**Here**](${resdata ? resdata.html_url : ''}) you can see your issue on GitHub.`);
+                    });
+                },
+                deny: () => {
+                    Embeds.sendEmbedError(channel, 'Canceled.');
+                }
+            }
+        });
+    
+        accmsg.send();
+    }
+
+ 
 
 }
