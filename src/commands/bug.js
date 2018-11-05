@@ -103,12 +103,12 @@ module.exports = function(msg, args, author, channel, guild) {
                 'Title: ```\n' + issueBuild.title + '\n```\n' + 
                 'Type: ```\n' + issueBuild.types.join(', ') + '\n```\n' +
                 'Message: ```\n' + issueBuild.body + '\n```\n' + 
-                'Press âœ… to send the report or press âŒ to cancel.'),
+                'Press ✅ to send the report or press ❌ to cancel.'),
             channel: channel,
             checkUser: author,
             emotes: {
-                accept: 'âœ…',
-                deny:   'âŒ'
+                accept: '✅',
+                deny:   '❌'
             },
             actions: {
                 accept: () => {
