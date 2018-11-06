@@ -5,7 +5,6 @@ var Consts = require('./consts');
 var WebSocket = require('./ws/ws');
 var Funcs = require('./funcs/funcs');
 
-
 exports.DEBUGMODE = process.argv.includes('--debug');
 
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
@@ -18,7 +17,7 @@ var client = new discord.Client({
 var mysql = MySql.createConnection(config.mysql);
 mysql.connect();
 
-var ws = new WebSocket(config.webinterface.pw, 8778, client);
+var ws = new WebSocket(config.webinterface.pw, (process.argv.includes('--1337') ? 1337 : 8778), client);
 
 var cmd = new CmdParser(client, config.prefix)
     .setHost(config.host)
