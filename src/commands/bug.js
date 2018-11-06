@@ -128,8 +128,7 @@ module.exports = function(msg, args, author, channel, guild) {
                     };
                     Request(options, (err, res) => {
                         let resdata = JSON.parse(res.body);
-                        console.log(resdata);
-                        Embeds.sendEmbed(channel, `Send. [**Here**](${resdata ? resdata.html_url : ''}) you can see your issue on GitHub.`);
+                        Embeds.sendEmbed(channel, `Sent. [**Here**](${resdata ? resdata.html_url : ''}) you can see your issue on GitHub.`);
                     });
                 },
                 deny: () => {
