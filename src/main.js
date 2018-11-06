@@ -102,6 +102,13 @@ cmd
         'Get information about Knecht V3', 
         `info`
     )
+    .register(
+        require('./commands/topic'), 
+        'topic', 
+        ['forum', 'theme', 'channel', 'chan'], 
+        'Create or manage a topic channel', 
+        `topic <name>\ntopic delete`
+    )
     // BOT OWNER COMMANDS
     .register(
         require('./commands/apitoken'), 
