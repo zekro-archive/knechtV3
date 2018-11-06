@@ -43,12 +43,23 @@ module.exports = function(msg, args, author, channel, guild) {
                     reject();
                     return;
                 }
-                if (res.owner != author.id && !author.roles.get(Main.config.staffrole)) {
+                if (res[0].creator != author.id && !author.roles.get(Main.config.staffrole)) {
                     Embeds.sendEmbedError(channel, 'You are not the creator of the channel or a authorized member to close this topic channel!');
                     resolve();
                     return;
                 }
-                chan.delete();
+                let archive = guild.channels.find((c) => c.type == 'category' && c.name.toLowerCase() == 'archive');
+                if (archive) {
+                    msg.delete();
+                    Embeds.sendEmbed(chan, `Topic closed by ${author} and channel got archived.`);
+                    chan.overwritePermissions(guild.id, {
+                        VIEW_CHANNEL: true,
+                        SEND_MESSAGES: false
+                    });
+                    chan.setParent(archive);
+                } else {
+                    chan.delete();
+                }
             });
         });
     }
