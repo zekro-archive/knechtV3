@@ -14,7 +14,7 @@ function encodeName(name) {
 module.exports = function(msg, args, author, channel, guild) {
 
     if (args.length < 1)
-        return Embeds.sendEmbedError(channel, 'USAGE:\n`topic <name>`\n`topic close (<name>)`');
+        return Embeds.sendEmbedError(channel, 'USAGE:\n`topic <name> (<description>)`\n`topic close (<name>)`');
 
     var guild = Main.client.guilds.first();
 
@@ -57,6 +57,7 @@ module.exports = function(msg, args, author, channel, guild) {
                         SEND_MESSAGES: false
                     });
                     chan.setParent(archive);
+                    Main.mysql.query('DELETE FROM topics WHERE channel = ?', [chan.id]);
                 } else {
                     chan.delete();
                 }
@@ -64,7 +65,8 @@ module.exports = function(msg, args, author, channel, guild) {
         });
     }
 
-    var name = encodeName(args.join(' '));
+    var name = encodeName(args[0]);
+    var description = args[1] ? args.slice(1).join(' ') : '*No descrption set.*';
     var counter = 0;
     var tname = name;
     while (guild.channels.find(c => c.name == tname)) {
@@ -78,7 +80,12 @@ module.exports = function(msg, args, author, channel, guild) {
         });
         c.setParent(group);
         Main.mysql.query('INSERT INTO topics (channel, creator, name) VALUES (?, ?, ?)', [c.id, author.id, name]);
-        Embeds.sendEmbed(channel, `Topic channel <#${c.id}> created by <@${author.id}>.`);
+        Embeds.sendEmbed(channel, `Topic channel <#${c.id}> created by ${author}.`);
+        c.send(Embeds.getEmbed('', name)
+            .addField('Creator', `${author} (${author.user.tag})`)
+            .addField('Description', description)
+            .setFooter('Topic channel can be closed using "!topic close" here.')
+        );
     }).catch(err => {
         Embeds.sendEmbedError(channel, 'Failed creating topic channel: ```\n' + err + '\n```');
     });

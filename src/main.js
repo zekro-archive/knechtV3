@@ -108,6 +108,7 @@ cmd
         'Create or manage a topic channel', 
         `topic <name>\ntopic delete`
     )
+
     // BOT OWNER COMMANDS
     .register(
         require('./commands/apitoken'), 
@@ -118,6 +119,7 @@ cmd
         'BOTOWNER',
         1
     )
+
     // STAFF COMMANDS
     .register(
         require('./commands/report'), 
@@ -176,6 +178,16 @@ cmd
         'STAFF',
         4
     )
+    .register(
+        require('./commands/pingtoggle'), 
+        'ment', 
+        ['mention', 'pingtoggle', 'pt'], 
+        'Manage mentionable roles', 
+        `!ment\n!ment <roleResolvable>`,
+        'STAFF',
+        4
+    )
+
     // ADMIN COMMANDS
     .register(
         require('./commands/restart'), 
@@ -213,6 +225,7 @@ cmd
         'ADMIN',
         5
     )
+    
     // ZEKRO COMMANDS
     .register(
         require('./commands/test'), 

@@ -33,8 +33,25 @@ exports.fetchChannel = (guild, identifier) => {
     ];
 
     for (var method of methods) {
-        let out = guild.members.find(method);
-        if (out && (!out.user.bot || bots))
+        let out = guild.channels.find(method);
+        if (out)
+            return out;
+    }
+}
+
+exports.fetchRole = (guild, identifier) => {
+    identifier = identifier.toLowerCase();
+
+    var methods = [
+        (m) => m.id == identifier || m.id == identifier.replace(/[<@&>]/gm, ""),
+        (m) => m.name.toLowerCase() == identifier,
+        (m) => m.name.toLowerCase().startsWith(identifier),
+        (m) => m.name.toLowerCase().includes(identifier)
+    ];
+
+    for (var method of methods) {
+        let out = guild.roles.find(method);
+        if (out)
             return out;
     }
 }
