@@ -151,15 +151,16 @@ cmd
         'STAFF', 
         4
     )
-    .register(
-        require('./commands/reloaddevroles'), 
-        'reloaddev', 
-        ['reloaddevroles', 'refreshdev'], 
-        'Create role + channel for new dev role or delete if removed', 
-        null, 
-        'STAFF', 
-        4
-    )
+    // DEPRECATED
+    // .register(
+    //     require('./commands/reloaddevroles'), 
+    //     'reloaddev', 
+    //     ['reloaddevroles', 'refreshdev'], 
+    //     'Create role + channel for new dev role or delete if removed', 
+    //     null, 
+    //     'STAFF', 
+    //     4
+    // )
     .register(
         require('./commands/kick'), 
         'kick', 
@@ -229,7 +230,7 @@ cmd
     // ZEKRO COMMANDS
     .register(
         require('./commands/test'), 
-        'test', 
+        'thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing', 
         [], 
         'Only for testing purposes', 
         null, 
@@ -256,7 +257,7 @@ require('./events/membercount');
 require('./events/ready');
 require('./events/bots');
 require('./events/newchannel');
-require('./events/chanselectcreator');
 require('./events/dm');
+// require('./events/chanselectcreator');
 
 client.login(exports.DEBUGMODE ? process.argv[3] : config.token);

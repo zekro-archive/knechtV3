@@ -75,9 +75,9 @@ module.exports = function(msg, args, author, channel, guild) {
     name = tname;
 
     return guild.createChannel(name, 'text').then(c => {
-        c.overwritePermissions(guild.id, {
-            VIEW_CHANNEL: false
-        });
+        // c.overwritePermissions(guild.id, {
+        //     VIEW_CHANNEL: false
+        // });
         c.setParent(group);
         Main.mysql.query('INSERT INTO topics (channel, creator, name) VALUES (?, ?, ?)', [c.id, author.id, name]);
         Embeds.sendEmbed(channel, `Topic channel <#${c.id}> created by ${author}.`);

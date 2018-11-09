@@ -1,3 +1,5 @@
+// DEPRECATED AND DISABLED
+
 var Main = require('../main');
 var Fs = require('fs');
 var Embeds = require('../funcs/embeds');

@@ -1,3 +1,5 @@
+// DEPRECATED AND DISABLED
+
 var Main = require('../main');
 var Request = require('request');
 var Embeds = require('../funcs/embeds');

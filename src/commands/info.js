@@ -19,5 +19,6 @@ module.exports = function(msg, args, author, channel, guild) {
 - [express-handlebars](https://npmjs.com/package/express-handlebars)
 - [body-parser](https://npmjs.com/package/body-parser)
 - [request](https://npmjs.com/package/request)`)
-    channel.sendMessage('', emb);
+        .setImage('https://zekro.de/src/shinobu_smile_banner.jpg')
+    return channel.sendMessage('', emb);
 }
