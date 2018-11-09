@@ -106,7 +106,7 @@ cmd
         'topic', 
         ['forum', 'theme', 'channel', 'chan'], 
         'Create or manage a topic channel', 
-        `topic <name>\ntopic delete`
+        `topic <name>\ntopic hide\ntopic delete (<name>)`
     )
 
     // BOT OWNER COMMANDS

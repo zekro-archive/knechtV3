@@ -14,7 +14,7 @@ function encodeName(name) {
 module.exports = function(msg, args, author, channel, guild) {
 
     if (args.length < 1)
-        return Embeds.sendEmbedError(channel, 'USAGE:\n`topic <name> (<description>)`\n`topic close (<name>)`');
+        return Embeds.sendEmbedError(channel, 'USAGE:\n`topic <name> (<description>)`\n`topic close (<name>)`\n`topic hide`');
 
     var guild = Main.client.guilds.first();
 
@@ -26,15 +26,46 @@ module.exports = function(msg, args, author, channel, guild) {
         return Embeds.sendEmbedError(channel, 'Could not find specified topic collection: `' + TOPIC_GROUP_NAME + '`');
     }
 
+    if (args[0].toLowerCase() == 'hide') {
+        msg.delete();
+        let chan = channel;
+        if (chan.parent != group) {
+            return Embeds.sendEmbedError(channel, 'Channel is no topic channel.');
+        }
+        return new Promise((resolve, reject) => {
+            Main.mysql.query('SELECT creator FROM topics WHERE channel = ?', [chan.id], (err, res) => {
+                if (err) {
+                    Embeds.sendEmbedError(channel, 'Could not get owner data from database.');
+                    reject();
+                    return;
+                }
+                if (res[0].creator == author.id) {
+                    Embeds.sendEmbedError(channel, 'You can not hide your own topic channel you have created.')
+                        .then((_m) => _m.delete(5000));
+                    resolve();
+                    return;
+                }
+                return channel.replacePermissionOverwrites({
+                    overwrites: [
+                        {
+                            id: author.id,
+                            denied: ['VIEW_CHANNEL'],
+                        }
+                    ]
+                });
+            });
+        });
+    }
+
     if (args[0].toLowerCase() == 'close') {
         let chan = channel;
-        if (!args[0]) {
+        if (args[1]) {
             let c = Funcs.fetchChannel(args.slice(1).join(' '));
             if (c)
                 chan = c;
         }
         if (chan.parent != group) {
-            return Embeds.sendEmbedError(channel, 'Channel is not part of the topics collection.');
+            return Embeds.sendEmbedError(channel, 'Channel is no topic channel.');
         }
         return new Promise((resolve, reject) => {
             Main.mysql.query('SELECT creator FROM topics WHERE channel = ?', [chan.id], (err, res) => {
@@ -84,7 +115,7 @@ module.exports = function(msg, args, author, channel, guild) {
         c.send(Embeds.getEmbed('', name)
             .addField('Creator', `${author} (${author.user.tag})`)
             .addField('Description', description)
-            .setFooter('Topic channel can be closed using "!topic close" here.')
+            .setFooter('Topic channel can be closed using "!topic close" here. Enter "!topic hide" here to hide this channel for you.')
         );
     }).catch(err => {
         Embeds.sendEmbedError(channel, 'Failed creating topic channel: ```\n' + err + '\n```');
