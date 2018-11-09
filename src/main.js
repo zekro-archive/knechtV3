@@ -171,6 +171,15 @@ cmd
         4
     )
     .register(
+        require('./commands/ban'), 
+        'ban', 
+        ['banmember'], 
+        'ban someone from the guild with entry in DB + kerbholz channel', 
+        `ban <member resolvable> <reason>`,
+        'STAFF',
+        4
+    )
+    .register(
         require('./commands/mute').exec, 
         'mute', 
         ['mutemember'], 
@@ -215,15 +224,6 @@ cmd
         'Eval javascript code with the bot', 
         `eval\neval <javascript code>`, 
         'ADMIN', 
-        5
-    )
-    .register(
-        require('./commands/ban'), 
-        'ban', 
-        ['banmember'], 
-        'ban someone from the guild with entry in DB + kerbholz channel', 
-        `ban <member resolvable> <reason>`,
-        'ADMIN',
         5
     )
     
