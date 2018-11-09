@@ -75,7 +75,7 @@ module.exports = function(msg, args, author, channel, guild) {
                     return;
                 }
                 if (res[0].creator != author.id && !author.roles.get(Main.config.staffrole)) {
-                    Embeds.sendEmbedError(channel, 'You are not the creator of the channel or a authorized member to close this topic channel!');
+                    Embeds.sendEmbedError(channel, 'You are not the creator of the channel or an authorized member to close topic channels!');
                     resolve();
                     return;
                 }

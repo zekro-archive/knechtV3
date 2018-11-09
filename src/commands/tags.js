@@ -18,7 +18,7 @@ module.exports = function(msg, args, author, channel, guild) {
         }
         
         let content = args.slice(2).join(' ')
-            .replace(/\|([A-Za-z]+)\|/gm, ':$1:');
+            .replace(/\|(\w+)\|/gm, ':$1:');
         let tag = res.find(r => r.name == args[1].toLowerCase());
         if (tag) {
             new AcceptMessage(Main.client, {
