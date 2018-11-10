@@ -17,17 +17,23 @@ function handleJoin(bot) {
 
     var admins = bot.guild.roles.find(r => r.id == Main.config.adminrole).members;
 
-    Main.mysql.query('INSERT INTO userbots (botid, ownerid) VALUES (?, ?)', [bot.id, invite.owner.id], (err, res) => {
-        delete Main.botInvites[bot.id];
-        bot.addRole(Main.config.userbots);
-        invite.owner.addRole(Main.config.botowners);
-        bot.setNickname(`${bot.displayName} (${invite.owner.user.username})`);
-        Embeds.sendEmbed(invite.owner, 
-            'Your bot got accepted and joined the guild!\n\n' + 
-            '**ATTENTION:** Please use the `prefix` command and register your bot prefix as soon as possible! ' +
-            'Otherwise your bot will be kicked. This is just for prevention of problems with the prefixes of the bots.');
-        admins.forEach(a => Embeds.sendEmbed(a, `Invite (ID: \`${invite.id}\`) got accepted.`));
-    });
+    Main.neo4j.run(
+        'MERGE  (o:Owner {id: $ownerid})' +
+        'MERGE  (b:Bot {id: $botid})' +
+        'CREATE (o)-[:OWNS]->(b)'
+    );
+
+    // Main.mysql.query('INSERT INTO userbots (botid, ownerid) VALUES (?, ?)', [bot.id, invite.owner.id], (err, res) => {
+    //     delete Main.botInvites[bot.id];
+    //     bot.addRole(Main.config.userbots);
+    //     invite.owner.addRole(Main.config.botowners);
+    //     bot.setNickname(`${bot.displayName} (${invite.owner.user.username})`);
+    //     Embeds.sendEmbed(invite.owner, 
+    //         'Your bot got accepted and joined the guild!\n\n' + 
+    //         '**ATTENTION:** Please use the `prefix` command and register your bot prefix as soon as possible! ' +
+    //         'Otherwise your bot will be kicked. This is just for prevention of problems with the prefixes of the bots.');
+    //     admins.forEach(a => Embeds.sendEmbed(a, `Invite (ID: \`${invite.id}\`) got accepted.`));
+    // });
 }
 
 function handleQuit(bot) {
