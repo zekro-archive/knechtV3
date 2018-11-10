@@ -45,13 +45,8 @@ module.exports = function(msg, args, author, channel, guild) {
                     resolve();
                     return;
                 }
-                return channel.replacePermissionOverwrites({
-                    overwrites: [
-                        {
-                            id: author.id,
-                            denied: ['VIEW_CHANNEL'],
-                        }
-                    ]
+                return channel.overwritePermissions(author.id, {
+                    VIEW_CHANNEL: false
                 });
             });
         });
@@ -79,45 +74,52 @@ module.exports = function(msg, args, author, channel, guild) {
                     resolve();
                     return;
                 }
-                let archive = guild.channels.find((c) => c.type == 'category' && c.name.toLowerCase() == 'archive');
-                if (archive) {
-                    msg.delete();
-                    Embeds.sendEmbed(chan, `Topic closed by ${author} and channel got archived.`);
-                    chan.overwritePermissions(guild.id, {
-                        VIEW_CHANNEL: true,
-                        SEND_MESSAGES: false
-                    });
-                    chan.setParent(archive);
-                    Main.mysql.query('DELETE FROM topics WHERE channel = ?', [chan.id]);
-                } else {
-                    chan.delete();
-                }
+                chan.delete();
+                // let archive = guild.channels.find((c) => c.type == 'category' && c.name.toLowerCase() == 'archive');
+                // if (archive) {
+                //     msg.delete();
+                //     Embeds.sendEmbed(chan, `Topic closed by ${author} and channel got archived.`);
+                //     chan.overwritePermissions(guild.id, {
+                //         VIEW_CHANNEL: true,
+                //         SEND_MESSAGES: false
+                //     });
+                //     chan.setParent(archive);
+                //     Main.mysql.query('DELETE FROM topics WHERE channel = ?', [chan.id]);
+                // } else {
+                //     chan.delete();
+                // }
             });
         });
     }
 
-    var name = encodeName(args[0]);
-    var description = args[1] ? args.slice(1).join(' ') : '*No descrption set.*';
-    var counter = 0;
-    var tname = name;
-    while (guild.channels.find(c => c.name == tname)) {
-        tname = name + '-' + (++counter);
-    }
-    name = tname;
+    Main.mysql.query('SELECT * FROM topics WHERE creator = ?', [author.id], (err, res) => {
+        if (err || !res) {
+            return Embeds.sendEmbedError(channel, 'Failed getting data from Database: ```' + err + '```');
+        }
+        if (res.length > 1 && !author.roles.get(Main.config.staffrole)) {
+            return Embeds.sendEmbedError(channel, 'Everyone is only allowed to create one topic channel. Close your topic to create another one.');
+        }
 
-    return guild.createChannel(name, 'text').then(c => {
-        // c.overwritePermissions(guild.id, {
-        //     VIEW_CHANNEL: false
-        // });
-        c.setParent(group);
-        Main.mysql.query('INSERT INTO topics (channel, creator, name) VALUES (?, ?, ?)', [c.id, author.id, name]);
-        Embeds.sendEmbed(channel, `Topic channel <#${c.id}> created by ${author}.`);
-        c.send(Embeds.getEmbed('', name)
-            .addField('Creator', `${author} (${author.user.tag})`)
-            .addField('Description', description)
-            .setFooter('Topic channel can be closed using "!topic close" here. Enter "!topic hide" here to hide this channel for you.')
-        );
-    }).catch(err => {
-        Embeds.sendEmbedError(channel, 'Failed creating topic channel: ```\n' + err + '\n```');
+        var name = encodeName(args[0]);
+        var description = args[1] ? args.slice(1).join(' ') : '*No descrption set.*';
+        var counter = 0;
+        var tname = name;
+        while (guild.channels.find(c => c.name == tname)) {
+            tname = name + '-' + (++counter);
+        }
+        name = tname;
+    
+        return guild.createChannel(name, 'text').then(c => {
+            c.setParent(group);
+            Main.mysql.query('INSERT INTO topics (channel, creator, name) VALUES (?, ?, ?)', [c.id, author.id, name]);
+            Embeds.sendEmbed(channel, `Topic channel <#${c.id}> created by ${author}.`);
+            c.send(Embeds.getEmbed('', name)
+                .addField('Creator', `${author} (${author.user.tag})`)
+                .addField('Description', description)
+                .setFooter('Topic channel can be closed using "!topic close" here. Enter "!topic hide" here to hide this channel for you.')
+            );
+        }).catch(err => {
+            Embeds.sendEmbedError(channel, 'Failed creating topic channel: ```\n' + err + '\n```');
+        });
     });
 }
