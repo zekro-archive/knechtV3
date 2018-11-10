@@ -45,13 +45,8 @@ module.exports = function(msg, args, author, channel, guild) {
                     resolve();
                     return;
                 }
-                return channel.replacePermissionOverwrites({
-                    overwrites: [
-                        {
-                            id: author.id,
-                            denied: ['VIEW_CHANNEL'],
-                        }
-                    ]
+                return channel.overwritePermissions(author.id, {
+                    VIEW_CHANNEL: false
                 });
             });
         });
