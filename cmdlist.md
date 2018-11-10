@@ -6,7 +6,6 @@
 
 ### ADMIN
 
-- [ban](#ban)
 - [eval](#eval)
 - [game](#game)
 - [restart](#restart)
@@ -17,7 +16,7 @@
 
 ### DEBUG
 
-- [test](#test)
+- [thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing](#thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing)
 
 ### MISC
 
@@ -25,17 +24,20 @@
 - [bug](#bug)
 - [dev](#dev)
 - [exec](#exec)
+- [info](#info)
 - [invite](#invite)
 - [notify](#notify)
 - [org](#org)
 - [prefix](#prefix)
+- [topic](#topic)
 
 ### STAFF
 
+- [ban](#ban)
 - [kick](#kick)
 - [link](#link)
+- [ment](#ment)
 - [mute](#mute)
-- [reloaddev](#reloaddev)
 - [report](#report)
 - [tag](#tag)
 
@@ -45,23 +47,6 @@
 # Commands index
 
 ## ADMIN
-
-### ban
-
-> ban someone from the guild with entry in DB + kerbholz channel
-
-| | |
-| --------- | --------- |
-| Permission | 5 |
-| Group | ADMIN |
-| Aliases | banmember |
-
-**Usage**
-
-```php
-ban <member resolvable> <reason>
-```
-
 
 ### eval
 
@@ -139,7 +124,7 @@ apitoken <bot resolvable>
 
 ## DEBUG
 
-### test
+### thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing
 
 > Only for testing purposes
 
@@ -228,6 +213,23 @@ exec -l <language> <code>
 ```
 
 
+### info
+
+> Get information about Knecht V3
+
+| | |
+| --------- | --------- |
+| Permission | 0 |
+| Group | MISC |
+| Aliases | about, credits |
+
+**Usage**
+
+```php
+info
+```
+
+
 ### invite
 
 > Invite your bot to this guild
@@ -297,8 +299,44 @@ prefix <botID> <prefix>
 ```
 
 
+### topic
+
+> Create or manage a topic channel
+
+| | |
+| --------- | --------- |
+| Permission | 0 |
+| Group | MISC |
+| Aliases | forum, theme, channel, chan |
+
+**Usage**
+
+```php
+topic <name>
+topic hide
+topic delete (<name>)
+```
+
+
 
 ## STAFF
+
+### ban
+
+> ban someone from the guild with entry in DB + kerbholz channel
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | banmember |
+
+**Usage**
+
+```php
+ban <member resolvable> <reason>
+```
+
 
 ### kick
 
@@ -334,6 +372,24 @@ link <bot resolvable> <user resolvable>
 ```
 
 
+### ment
+
+> Manage mentionable roles
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases | mention, pingtoggle, pt |
+
+**Usage**
+
+```php
+!ment
+!ment <roleResolvable>
+```
+
+
 ### mute
 
 > Mute someone with a reason optionally for a given time
@@ -350,23 +406,6 @@ link <bot resolvable> <user resolvable>
 !mute <member resolvable> [<time (\d{1,}[smhtw])>] <reason>
 !mute <member resolvable> - to unmute
 !mute list
-```
-
-
-### reloaddev
-
-> Create role + channel for new dev role or delete if removed
-
-| | |
-| --------- | --------- |
-| Permission | 4 |
-| Group | STAFF |
-| Aliases | reloaddevroles, refreshdev |
-
-**Usage**
-
-```php
-no help
 ```
 
 
