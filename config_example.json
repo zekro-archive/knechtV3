@@ -47,6 +47,12 @@
         "database": "knecht"
     },
 
+    "neo4j": {
+        "host": "bolt://127.0.0.1:7687",
+        "user": "neo4j",
+        "password": ""
+    },
+
     "urls": {
         "devroles": "https://raw.githubusercontent.com/Dark-Devs/knechtV3/master/DEVROLES.json"
     }

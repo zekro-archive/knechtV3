@@ -1,5 +1,6 @@
 var discord = require('discord.js');
 var MySql = require('mysql');
+var Neo4j = require('neo4j-driver').v1;
 var { CmdParser } = require('discordjs-cmds');
 var Consts = require('./consts');
 var WebSocket = require('./ws/ws');
@@ -16,6 +17,10 @@ var client = new discord.Client({
 
 var mysql = MySql.createConnection(config.mysql);
 mysql.connect();
+
+var neo4j = Neo4j
+    .driver(config.neo4j.host, Neo4j.auth.basic(config.neo4j.user, config.neo4j.password))
+    .session();
 
 var ws = new WebSocket(config.webinterface.pw, (process.argv.includes('--1337') ? 1337 : 8778), client);
 
@@ -230,7 +235,7 @@ cmd
     // ZEKRO COMMANDS
     .register(
         require('./commands/test'), 
-        'thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing', 
+        'test', 
         [], 
         'Only for testing purposes', 
         null, 
@@ -245,6 +250,7 @@ cmd.createDocs('./cmdlist.md', 'md');
 exports.client = client;
 exports.cmd = cmd;
 exports.mysql = mysql;
+exports.neo4j = neo4j;
 
 exports.botInvites = {};
 exports.changedGame = false;
