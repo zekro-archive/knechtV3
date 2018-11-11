@@ -26,27 +26,31 @@ module.exports = {
 
     timerHandler: () => {
         var guild = Main.client.guilds.first();
-        Main.mysql.query('SELECT * FROM userbots', (err, res) => {
-            if (err) {
-                console.log('ERROR: ', err)
-                return;
-            }
-            res.forEach((r) => {
-                let bot = guild.members.get(r.botid);
+
+        Main.neo4j.run(
+            'MATCH (b:Bot)' +
+            'RETURN (b)'
+        ).then((res) => {
+            res.records.forEach((record) => {
+                let node = record.get(0);
+                let bot = guild.members.get(node.properties.id);
                 if (bot) {
-                    try {
-                        let stats = JSON.parse(r.uptime)
-                        if (!stats) {
-                            stats = [];
-                        }
-                        if (stats.length >= setRange) {
-                            stats.splice(0, 1);
-                        }
-                        stats.push(module.exports.getStatus(bot));
-                        Main.mysql.query('UPDATE userbots SET uptime = ? WHERE botid = ?', [JSON.stringify(stats), bot.id]);
-                    } catch(e) {
-                        console.log('ERROR: ', e)
+                    let stats = node.properties.uptime;
+                    if (!stats) {
+                        stats = [];
                     }
+                    if (stats.length >= setRange) {
+                        stats.splice(0, 1);
+                    }
+                    stats.push(module.exports.getStatus(bot));
+                    Main.neo4j.run(
+                        'MATCH (b:Bot {id: $botid})' +
+                        'SET b.uptime = $uptime',
+                        {
+                            botid: bot.id,
+                            uptime: stats
+                        }
+                    );
                 }
             });
         });
@@ -58,26 +62,21 @@ module.exports = {
     },
 
     getUptimes(cb) {
-        Main.mysql.query('SELECT * FROM userbots', (err, res) => {
-            if (err) {
-                cb(null, err);
-                return;
-            }
-            var result = {};
-            res.forEach((r) => {
-                result[r.botid] = module.exports.getUptimeFromRow(r)
+        Main.neo4j.run(
+            'MATCH (b:Bot)' +
+            'RETURN (b)'
+        ).then((res) => {
+            let result = {};
+            res.records.forEach((record) => {
+                let node = record.get(0);
+                result[node.properties.id] = module.exports.getUptimeFromRow(node);
             });
             cb(result);
         });
     },
 
     getUptimeFromRow(r) {
-        try {
-            let uptime = JSON.parse(r.uptime);
-            return Funcs.padStart((calculateUptimePerc(uptime)).toFixed(2), 6);
-        } catch (e) {
-            console.log('ERROR: ', e)
-            return 'err';
-        }
+        let uptime = r.uptime;
+        return Funcs.padStart((calculateUptimePerc(uptime)).toFixed(2), 6);
     }
 };

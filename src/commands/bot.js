@@ -13,7 +13,7 @@ module.exports = function(msg, args, author, channel, guild) {
         return Embeds.sendEmbedError(channel, 'USAGE:\n`bots list`\n`bot <user/bot resolvable>`');
     }
 
-    function botlistCollected(botlist) {
+    return Funcs.getBotList().then((botlist) => {
         if (args[0] == 'list' || args[0] == 'ls') {
             let table = [["     BOT", "-------------"], ["  OWNERS", "---------"], ["  PREFIX", "----------"], ["  UPTIME", "----------"]];
             Object.keys(botlist).forEach((k, l) => {
@@ -89,35 +89,36 @@ module.exports = function(msg, args, author, channel, guild) {
 
         channel.send('', embed);
         resolve();
-    }
-
-    return new Promise((resolve, reject) => {
-
-        Main.neo4j.run('MATCH (x:Bot) RETURN x').then((res) => {
-            let botlist = [];
-            let nNodes = res.records[0].length;
-            res.records[0].forEach((node) => {
-                let botid = node.properties.id;
-                let prefix = node.properties.prefix;
-                let uptime = node.properties.uptime;
-                let owners = [];
-                Main.neo4j.run('MATCH (x:Owner)-[:OWNS]->(:Bot {id: $botid}) RETURN x', { botid }).then((res) => {
-                    res.records.forEach((record) => {
-                        owners.push(record.get(0).properties.id);
-                    });
-
-                    botlist[botid] = {
-                        uptime,
-                        prefix,
-                        owners,
-                        botid
-                    };
-
-                    if (--nNodes == 0) {
-                        botlistCollected(botlist);
-                    }
-                });
-            });
-        });
     });
+
+    // return new Promise((resolve, reject) => {
+
+    //     Main.neo4j.run('MATCH (b:Bot) RETURN (b)').then((res) => {
+    //         let botlist = [];
+    //         let nNodes = res.records.length;
+    //         res.records.forEach((record) => {
+    //             let node = record.get(0);
+    //             let botid = node.properties.id;
+    //             let prefix = node.properties.prefix;
+    //             let uptime = node.properties.uptime;
+    //             let owners = [];
+    //             Main.neo4j.run('MATCH (x:Owner)-[:OWNS]->(:Bot {id: $botid}) RETURN x', { botid }).then((res) => {
+    //                 res.records.forEach((record) => {
+    //                     owners.push(record.get(0).properties.id);
+    //                 });
+
+    //                 botlist[botid] = {
+    //                     uptime,
+    //                     prefix,
+    //                     owners,
+    //                     botid
+    //                 };
+
+    //                 if (--nNodes == 0) {
+    //                     botlistCollected(botlist);
+    //                 }
+    //             });
+    //         });
+    //     });
+    // });
 };

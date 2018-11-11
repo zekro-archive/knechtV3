@@ -29,7 +29,7 @@ module.exports = function(msg, args, author, channel, guild) {
             let botid = r.botid;
             let ownerid = r.ownerid;
             let prefix = r.prefix;
-            let uptime = r.uptime;
+            let uptime = JSON.parse(r.uptime);
 
             Main.neo4j.run(
                 'CREATE (:Owner {id: $ownerid})-[:OWNS]->(:Bot {id: $botid, prefix: $prefix, uptime: $uptime})',

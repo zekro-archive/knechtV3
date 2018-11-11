@@ -16,7 +16,7 @@
 
 ### DEBUG
 
-- [thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing](#thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing)
+- [test](#test)
 
 ### MISC
 
@@ -124,7 +124,7 @@ apitoken <bot resolvable>
 
 ## DEBUG
 
-### thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing
+### test
 
 > Only for testing purposes
 
