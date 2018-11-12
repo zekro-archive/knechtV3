@@ -230,7 +230,7 @@ cmd
     // ZEKRO COMMANDS
     .register(
         require('./commands/test'), 
-        'thiscmdwillfuckupeverythingpleaseonlyuseifyoureallyknowwhatyouaredoing', 
+        'test', 
         [], 
         'Only for testing purposes', 
         null, 
