@@ -34,8 +34,10 @@ module.exports = function(msg, args, author, channel, guild) {
                 res.forEach((r, i) => {
                     let reporter = guild.members.get(r.reporter);
                     emb.addField(`Report #${i + 1}`, 
+                        `**Case ID:** \`${r.uid}\`\n` +
                         `**Date:** \`${r.date}\`\n` +
                         `**Reporter:** ${reporter ? reporter : r.reporter}\n` +
+                        `**Type:** \`${r.type}\`\n` +
                         '**Reason:**\n```' + r.reason + '```');
                 });
                 channel.send('', emb);
@@ -74,7 +76,7 @@ module.exports = function(msg, args, author, channel, guild) {
                 khemb = Embeds.getEmbed('Case ID: `' + uid + '`', 'REPORT')
                     .addField('EXECUTOR', `${author} (${author.user.tag})`, true)
                     .addField('VICTIM', `${victim} (${victim.user.tag})`, true)
-                    .addField('TYPE', type, false)
+                    .addField('TYPE', '```\n' + type + '\n```', false)
                     .addField('REASON', reason.replace(/(https?:\/\/)?(www\.)?((\w)+\.)+([a-zA-Z]{2,}(?!\())(:\d+)?(\/\S+)?(?!\w)/gm, '`<link removed>`'), false);
             }
             kerbholz.send('', khemb);  

@@ -2,6 +2,7 @@ var Main = require('../main');
 var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 var AcceptMessage = require('acceptmessage');
+var Snowflake = require('../funcs/snowflake');
 var Consts = require('../consts');
 
 
@@ -23,7 +24,11 @@ module.exports = function(msg, args, author, channel, guild) {
         return Embeds.sendEmbedError(channel, 'Invalid victim.');
     }
 
-    var reason = '[KICK] ' + args.slice(1).join(' ');
+    var reason = args.slice(1).join(' ');
+    var type = 'KICK';
+
+    var node = new Snowflake.Node(Consts.SNOWFLAKE_NODES.REPORTS);
+    var uid = node.next();
 
     var msg = new AcceptMessage(Main.client, {
         content: Embeds.getEmbed('', 'Please review your kick execute')
@@ -38,7 +43,10 @@ module.exports = function(msg, args, author, channel, guild) {
         actions: {
              accept: () => {
                 victim.kick(reason);
-                Main.mysql.query('INSERT INTO reports VALUES (?, ?, ?, ?)', [victim.id, author.id, Funcs.getTime(), reason]);
+                Main.mysql.query(
+                    'INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?)', 
+                    [uid, victim.id, author.id, Funcs.getTime(), reason, type]
+                );
                 let emb = Embeds.getEmbed('', 'KICK REPORT')
                     .setColor(Consts.COLORS.ORANGE)
                     .addField('EXECUTOR', `${author} (${author.user.tag})`, true)

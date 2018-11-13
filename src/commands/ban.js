@@ -2,6 +2,7 @@ var Main = require('../main');
 var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 var AcceptMessage = require('acceptmessage');
+var Snowflake = require('../funcs/snowflake');
 var Consts = require('../consts');
 
 
@@ -23,7 +24,11 @@ module.exports = function(msg, args, author, channel, guild) {
         return Embeds.sendEmbedError(channel, 'Invalid victim.');
     }
 
-    var reason = '[BAN] ' + args.slice(1).join(' ');
+    var reason = args.slice(1).join(' ');
+    var type = 'BAN';
+
+    var node = new Snowflake.Node(Consts.SNOWFLAKE_NODES.REPORTS);
+    var uid = node.next();
 
     var msg = new AcceptMessage(Main.client, {
         content: Embeds.getEmbed('', 'Please review your ban execute')
@@ -37,8 +42,11 @@ module.exports = function(msg, args, author, channel, guild) {
         deleteMessage: true,
         actions: {
              accept: () => {
-                Main.mysql.query('INSERT INTO reports VALUES (?, ?, ?, ?)', [victim.id, author.id, Funcs.getTime(), reason]);
-                let emb = Embeds.getEmbed('', 'BAN REPORT')
+                Main.mysql.query(
+                    'INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?)', 
+                    [uid, victim.id, author.id, Funcs.getTime(), reason, type]
+                );
+                let emb = Embeds.getEmbed('Case ID: `' + uid + '`', 'BAN REPORT')
                     .setColor(Consts.COLORS.RED)
                     .addField('EXECUTOR', `${author} (${author.user.tag})`, true)
                     .addField('VICTIM', `${victim} (${victim.user.tag})`, true)
