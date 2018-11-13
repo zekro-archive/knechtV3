@@ -148,3 +148,36 @@ exports.padEnd = (string, n, char) => {
     }
     return string;
 }
+
+exports.getBotList = () => {
+    return new Promise((resolve, reject) => {
+
+        Main.neo4j.run('MATCH (b:Bot) RETURN (b)').then((res) => {
+            let botlist = [];
+            let nNodes = res.records.length;
+            res.records.forEach((record) => {
+                let node = record.get(0);
+                let botid = node.properties.id;
+                let prefix = node.properties.prefix;
+                let uptime = node.properties.uptime;
+                let owners = [];
+                Main.neo4j.run('MATCH (x:Owner)-[:OWNS]->(:Bot {id: $botid}) RETURN x', { botid }).then((res) => {
+                    res.records.forEach((record) => {
+                        owners.push(record.get(0).properties.id);
+                    });
+
+                    botlist[botid] = {
+                        uptime,
+                        prefix,
+                        owners,
+                        botid
+                    };
+
+                    if (--nNodes == 0) {
+                        resolve(botlist);
+                    }
+                });
+            });
+        }).catch(reject);
+    });
+};

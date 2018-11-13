@@ -23,4 +23,4 @@ module.exports = function(msg, args, author, channel, guild) {
             Main.mysql.query('UPDATE reports SET uid = ?, type = ? WHERE victim = ? AND reporter = ? AND date = ?', [uid, type, r.victim, r.reporter, r.date]);
         });
     });
-}
+};
