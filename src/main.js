@@ -207,6 +207,15 @@ cmd
         'STAFF',
         4
     )
+    .register(
+        require('./commands/idban'), 
+        'idban', 
+        [], 
+        'Ban a user who is not yet on the guild by ID', 
+        `!idban <userID> (<Reason>)`,
+        'STAFF',
+        4
+    )
 
     // ADMIN COMMANDS
     .register(

@@ -34,6 +34,7 @@
 ### STAFF
 
 - [ban](#ban)
+- [idban](#idban)
 - [kick](#kick)
 - [link](#link)
 - [ment](#ment)
@@ -335,6 +336,23 @@ topic delete (<name>)
 
 ```php
 ban <member resolvable> <reason>
+```
+
+
+### idban
+
+> Ban a user who is not yet on the guild by ID
+
+| | |
+| --------- | --------- |
+| Permission | 4 |
+| Group | STAFF |
+| Aliases |  |
+
+**Usage**
+
+```php
+!idban <userID> (<Reason>)
 ```
 
 
