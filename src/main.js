@@ -10,12 +10,16 @@ exports.DEBUGMODE = process.argv.includes('--debug');
 var config = require(exports.DEBUGMODE ? '../config_example.json' : '../config.json');
 exports.config = config;
 
+exports.package =  = require('../package.json');
+console.log(`Knecht v.${exports.package.version}`);
+
 var client = new discord.Client({
     fetchAllMembers: true
 });
 
 var mysql = MySql.createConnection(config.mysql);
 mysql.connect();
+console.log(`Connected to MySql database ${config.mysql.database}@${config.mysql.host}`);
 
 var ws = new WebSocket(config.webinterface.pw, (process.argv.includes('--1337') ? 1337 : 8778), client);
 
