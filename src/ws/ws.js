@@ -127,7 +127,9 @@ class WebSocket {
                             victimid:     r.victim,
                             reporterid:   r.reporter,
                             date:         r.date,
-                            reason:       r.reason
+                            reason:       r.reason,
+                            uid:          r.uid,
+                            type:         r.type
                         });
                     }
                 });

@@ -10,20 +10,24 @@
 <div>
     <table style="width: 100%;" border="1" class="border">
         <tr>
+            <th class="border">UID</th>
             <th class="border">Victim</th>
             <th class="border">Victim ID</th>
             <th class="border">Reporter</th>
             <th class="border">Reporter ID</th>
             <th class="border">Date</th>
+            <th class="border">Type</th>
             <th class="border">Reason</th>
         </tr>
         {{#each fields}}
             <tr>
+                <td class="border">{{this.uid}}</td>
                 <td class="border">{{this.victimname}}</td>
                 <td class="border">{{this.victimid}}</td>
                 <td class="border">{{this.reportername}}</td>
                 <td class="border">{{this.reporterid}}</td>
                 <td class="border">{{this.date}}</td>
+                <td class="border">{{this.type}}</td>
                 <td class="border">{{this.reason}}</td>
             </tr>
         {{/each}}
