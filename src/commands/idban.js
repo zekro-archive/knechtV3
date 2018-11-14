@@ -33,8 +33,8 @@ module.exports = function(msg, args, author, channel, guild) {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bot ' + Main.config.token,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type':  'application/json',
+                'Accept':        'application/json'
             },
             body: JSON.stringify({
                 reason: reason

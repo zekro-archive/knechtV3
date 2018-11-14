@@ -29,6 +29,7 @@
 - [notify](#notify)
 - [org](#org)
 - [prefix](#prefix)
+- [profile](#profile)
 - [topic](#topic)
 
 ### STAFF
@@ -297,6 +298,26 @@ org <github username / URL>
 ```php
 prefix list
 prefix <botID> <prefix>
+```
+
+
+### profile
+
+> Get the profile of a member or set your own profiles properties
+
+| | |
+| --------- | --------- |
+| Permission | 0 |
+| Group | MISC |
+| Aliases | user, member, me |
+
+**Usage**
+
+```php
+profile (<memberResolvable>)
+profile bio
+profile github
+profile reset
 ```
 
 

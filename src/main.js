@@ -118,6 +118,13 @@ cmd
         'Create or manage a topic channel', 
         `topic <name>\ntopic hide\ntopic delete (<name>)`
     )
+    .register(
+        require('./commands/profile'), 
+        'profile', 
+        ['user', 'member', 'me'], 
+        'Get the profile of a member or set your own profiles properties', 
+        `profile (<memberResolvable>)\nprofile bio\nprofile github\nprofile reset`
+    )
 
     // BOT OWNER COMMANDS
     .register(
