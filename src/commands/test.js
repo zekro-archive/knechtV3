@@ -2,7 +2,7 @@ var Main = require('../main');
 var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 var consts = require('../consts');
-var Snowflake = require('../funcs/snowflake');
+var Snowflake = require('@zekro/snowflake-js');
 
 module.exports = function(msg, args, author, channel, guild) {
 

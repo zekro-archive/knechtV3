@@ -1,7 +1,7 @@
 var Main = require('../main');
 var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
-var Snowflake = require('../funcs/snowflake');
+var Snowflake = require('@zekro/snowflake-js');
 var Consts = require('../consts');
 var AcceptMessage = require('acceptmessage');
 
