@@ -1,7 +1,7 @@
 var Main = require('../main');
 var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
-var Snowflake = require('../funcs/snowflake');
+var Snowflake = require('@zekro/snowflake-js');
 var Consts = require('../consts');
 var AcceptMessage = require('acceptmessage');
 
@@ -20,7 +20,7 @@ module.exports = function(msg, args, author, channel, guild) {
 
     if (args[0] == 'list') {
         let victim = Funcs.fetchMember(guild, args[1], false);
-        let victimID = args[1];
+    let victimID = args[1];
         return new Promise((resolve, reject) => {
             Main.mysql.query('SELECT * FROM reports WHERE victim = ?', [victim ? victim.id : victimID], (err, res) => {
                 if (err)
