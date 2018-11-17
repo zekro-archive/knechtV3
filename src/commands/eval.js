@@ -4,7 +4,8 @@ var Embeds = require('../funcs/embeds');
 var Funcs = require('../funcs/funcs');
 var Consts = require('../consts');
 var Discord = require('discord.js');
-var Request = require('request');
+var request = require('request');
+var Snowflake = require('@zekro/snowflake-js');
 
 module.exports = function(msg, args, author, channel, guild) {
 
@@ -23,6 +24,7 @@ module.exports = function(msg, args, author, channel, guild) {
             '- [Main](https://github.com/zekroTJA/knechtV3/blob/master/src/main.js)\n' +
             '- [Consts](https://github.com/zekroTJA/knechtV3/blob/master/src/consts.js)\n' +
             '- [Embeds](https://github.com/zekroTJA/knechtV3/blob/master/src/funcs/embeds.js)\n' +
+            '- [Snowflake](https://github.com/zekrotja/snowflake-js)\n' + 
             '- [Funcs](https://github.com/zekroTJA/knechtV3/blob/master/src/funcs/funcs.js)\n' +
             '- [Util](https://nodejs.org/api/util.html)\n' +
             '- [Discord](https://discord.js.org/#/docs/main/stable/general/welcome)\n\n' +
