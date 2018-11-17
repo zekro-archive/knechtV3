@@ -15,7 +15,7 @@ function getProfile(memb) {
 				res = res[0];
 			}
 			res.joinedAt = memb.joinedAt;
-			res.createdAt = memb.createdAt;
+			res.createdAt = memb.user.createdAt;
 			Main.mysql.query('SELECT * FROM reports WHERE victim = ?', memb.id, (err, repRes) => {
 				if (err) {
 					reject(err);
@@ -228,7 +228,7 @@ module.exports = function(msg, args, author, channel, guild) {
 					.addField('Bio', res.bio ? res.bio : '*No bio set.*')
 					.addField('Guild Member Since', Funcs.getTime(res.joinedAt))
 					.addField('Discord Account Existing Since', Funcs.getTime(res.createdAt))
-					.addField('GitHub Profile', res.github ? `:github:  [**${res.github}**](https://github.com/${res.github})` : '*No GitHub profile set.*')
+					.addField('GitHub Profile', res.github ? `:link: [**${res.github}**](https://github.com/${res.github})` : '*No GitHub profile set.*')
 					.addField('Reports', 
 						res.reports > 0 
 						? `This user has **${res.reports}** on record.\n*See all reports details with \`!rep list\` command.*`
