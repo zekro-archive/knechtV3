@@ -21,7 +21,7 @@ Main.client.on('message', (msg) => {
     var content = msg.content;
 
     new AcceptMessage(Main.client, {
-        content: Embeds.getEmbed('Klick 🔵 to sen your messsage anonymously or ✅ to send your message with your discord name tag.'),
+        content: Embeds.getEmbed('React with 🔵 to send your messsage anonymously or ✅ to send your message with your discord name tag.'),
         deleteMessage: true,
         emotes: {
             accept: '🔵',
